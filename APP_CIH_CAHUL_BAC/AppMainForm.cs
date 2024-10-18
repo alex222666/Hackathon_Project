@@ -31,7 +31,7 @@ namespace APP_CIH_CAHUL_BAC
             PictureBox pictureBox = new PictureBox();
             pictureBox.Size = new Size(751, 114);
             pictureBox.BackgroundImageLayout = ImageLayout.Zoom;
-            pictureBox.BackgroundImage = new Bitmap($"resources\\{list[id].imageName}");
+            pictureBox.BackgroundImage = new Bitmap($"../../../quizimg/{list[id].imageName}");
             panel.Controls.Add(pictureBox);
             radiobutton1.Text = list[id].Raspunsuri[2];
             radiobutton2.Text = list[id].Raspunsuri[1];
