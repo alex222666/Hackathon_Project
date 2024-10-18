@@ -115,6 +115,7 @@
             guna2Elipse4 = new Guna.UI2.WinForms.Guna2Elipse(components);
             guna2Elipse5 = new Guna.UI2.WinForms.Guna2Elipse(components);
             fileSystemWatcher1 = new FileSystemWatcher();
+            label67 = new Label();
             guna2Panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox20).BeginInit();
@@ -570,6 +571,7 @@
             // 
             // panel1
             // 
+            panel1.Controls.Add(label67);
             panel1.Controls.Add(panel2);
             panel1.Controls.Add(radiobutton1);
             panel1.Controls.Add(radiobutton2);
@@ -583,7 +585,7 @@
             // 
             panel2.Location = new Point(0, 0);
             panel2.Name = "panel2";
-            panel2.Size = new Size(757, 117);
+            panel2.Size = new Size(320, 224);
             panel2.TabIndex = 52;
             // 
             // radiobutton1
@@ -595,7 +597,7 @@
             radiobutton1.CheckedState.InnerColor = Color.White;
             radiobutton1.CheckedState.InnerOffset = -4;
             radiobutton1.Font = new Font("Comic Sans MS", 10.8F, FontStyle.Bold);
-            radiobutton1.Location = new Point(27, 193);
+            radiobutton1.Location = new Point(378, 193);
             radiobutton1.Name = "radiobutton1";
             radiobutton1.Size = new Size(194, 29);
             radiobutton1.TabIndex = 51;
@@ -614,7 +616,7 @@
             radiobutton2.CheckedState.InnerColor = Color.White;
             radiobutton2.CheckedState.InnerOffset = -4;
             radiobutton2.Font = new Font("Comic Sans MS", 10.8F, FontStyle.Bold);
-            radiobutton2.Location = new Point(27, 158);
+            radiobutton2.Location = new Point(378, 158);
             radiobutton2.Name = "radiobutton2";
             radiobutton2.Size = new Size(194, 29);
             radiobutton2.TabIndex = 50;
@@ -633,7 +635,7 @@
             radiobutton3.CheckedState.InnerColor = Color.White;
             radiobutton3.CheckedState.InnerOffset = -4;
             radiobutton3.Font = new Font("Comic Sans MS", 10.8F, FontStyle.Bold);
-            radiobutton3.Location = new Point(27, 123);
+            radiobutton3.Location = new Point(378, 123);
             radiobutton3.Name = "radiobutton3";
             radiobutton3.Size = new Size(194, 29);
             radiobutton3.TabIndex = 49;
@@ -878,6 +880,15 @@
             fileSystemWatcher1.EnableRaisingEvents = true;
             fileSystemWatcher1.SynchronizingObject = this;
             // 
+            // label67
+            // 
+            label67.Font = new Font("Comic Sans MS", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 204);
+            label67.Location = new Point(326, 0);
+            label67.Name = "label67";
+            label67.Size = new Size(423, 101);
+            label67.TabIndex = 34;
+            label67.Text = "Totate sarcinile sunt similare cu cele folosite la bac.";
+            // 
             // AppMainForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -954,5 +965,6 @@
         private Guna.UI2.WinForms.Guna2RadioButton radiobutton3;
         private Panel panel2;
         private FileSystemWatcher fileSystemWatcher1;
+        private Label label67;
     }
 }

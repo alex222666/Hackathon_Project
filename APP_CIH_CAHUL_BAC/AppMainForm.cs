@@ -42,23 +42,13 @@ namespace APP_CIH_CAHUL_BAC
         }
         private async void guna2Button3_Click(object sender, EventArgs e)
         {
-            for (double i = 1; i > 0; i -= 0.01)
-            {
-                this.Opacity = i;
-                await Task.Delay(1);
-            }
 
             this.Hide();
 
             Form1 form1 = new Form1();
-            form1.Opacity = 0;
+            form1.Opacity = 1;
             form1.ShowDialog();
 
-            for (double i = 0; i <= 2; i += 0.01)
-            {
-                form1.Opacity = i;
-                await Task.Delay(1);
-            }
         }
 
         private void buttOnClick(object sender, EventArgs e)
