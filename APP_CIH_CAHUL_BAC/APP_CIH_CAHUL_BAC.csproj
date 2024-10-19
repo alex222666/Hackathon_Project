@@ -35,13 +35,18 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Guna.UI2.WinForms" Version="2.0.4.6" />
     <PackageReference Include="Microsoft.Data.Sqlite" Version="8.0.2" />
     <PackageReference Include="Microsoft.Data.Sqlite.Core" Version="8.0.2" />
     <PackageReference Include="SQLitePCLRaw.bundle_e_sqlite3" Version="2.1.8" />
     <PackageReference Include="SQLitePCLRaw.core" Version="2.1.8" />
     <PackageReference Include="SQLitePCLRaw.lib.e_sqlite3" Version="2.1.8" />
     <PackageReference Include="System.Data.SQLite" Version="1.0.118" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Guna.UI2">
+      <HintPath>Guna.UI2.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
   <ItemGroup>
