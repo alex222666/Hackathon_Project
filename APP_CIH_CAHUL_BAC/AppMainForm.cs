@@ -40,16 +40,7 @@ namespace APP_CIH_CAHUL_BAC
             radiobutton2.Tag = list[id].Raspunsuri[1];
             radiobutton3.Tag = list[id].Raspunsuri[0];
         }
-        private async void guna2Button3_Click(object sender, EventArgs e)
-        {
 
-            this.Hide();
-
-            Form1 form1 = new Form1();
-            form1.Opacity = 1;
-            form1.ShowDialog();
-
-        }
 
         private void buttOnClick(object sender, EventArgs e)
         {
@@ -77,14 +68,14 @@ namespace APP_CIH_CAHUL_BAC
             placeDataOn(ref panel2, ref list);
         }
 
-        private void guna2Panel2_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
         private void guna2Button17_Click(object sender, EventArgs e)
         {
             Process.Start("mspaint");
+        }
+
+        private void guna2Button2_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -97,6 +97,7 @@
             guna2Button12 = new Guna.UI2.WinForms.Guna2Button();
             guna2Panel2 = new Guna.UI2.WinForms.Guna2Panel();
             panel1 = new Panel();
+            label67 = new Label();
             panel2 = new Panel();
             radiobutton1 = new Guna.UI2.WinForms.Guna2RadioButton();
             radiobutton2 = new Guna.UI2.WinForms.Guna2RadioButton();
@@ -115,7 +116,6 @@
             guna2Elipse4 = new Guna.UI2.WinForms.Guna2Elipse(components);
             guna2Elipse5 = new Guna.UI2.WinForms.Guna2Elipse(components);
             fileSystemWatcher1 = new FileSystemWatcher();
-            label67 = new Label();
             guna2Panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox20).BeginInit();
@@ -195,7 +195,6 @@
             guna2Button3.TabIndex = 0;
             guna2Button3.Text = "Sarcini de lucru";
             guna2Button3.TextOffset = new Point(0, -2);
-            guna2Button3.Click += guna2Button3_Click;
             // 
             // pictureBox20
             // 
@@ -567,7 +566,6 @@
             guna2Panel2.ShadowDecoration.CustomizableEdges = customizableEdges34;
             guna2Panel2.Size = new Size(801, 547);
             guna2Panel2.TabIndex = 31;
-            guna2Panel2.Paint += guna2Panel2_Paint;
             // 
             // panel1
             // 
@@ -580,6 +578,15 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(760, 227);
             panel1.TabIndex = 56;
+            // 
+            // label67
+            // 
+            label67.Font = new Font("Comic Sans MS", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 204);
+            label67.Location = new Point(326, 0);
+            label67.Name = "label67";
+            label67.Size = new Size(423, 101);
+            label67.TabIndex = 34;
+            label67.Text = "Totate sarcinile sunt similare cu cele folosite la bac.";
             // 
             // panel2
             // 
@@ -864,6 +871,7 @@
             guna2Button2.TabIndex = 33;
             guna2Button2.Text = "Finalizați și trimiteți";
             guna2Button2.TextOffset = new Point(1, -2);
+            guna2Button2.Click += guna2Button2_Click;
             // 
             // guna2Elipse4
             // 
@@ -879,15 +887,6 @@
             // 
             fileSystemWatcher1.EnableRaisingEvents = true;
             fileSystemWatcher1.SynchronizingObject = this;
-            // 
-            // label67
-            // 
-            label67.Font = new Font("Comic Sans MS", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 204);
-            label67.Location = new Point(326, 0);
-            label67.Name = "label67";
-            label67.Size = new Size(423, 101);
-            label67.TabIndex = 34;
-            label67.Text = "Totate sarcinile sunt similare cu cele folosite la bac.";
             // 
             // AppMainForm
             // 
