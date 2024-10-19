@@ -76,10 +76,12 @@ namespace APP_CIH_CAHUL_BAC
         {
             panel.Controls.Clear();
             PictureBox pictureBox = new PictureBox();
-            pictureBox.Size = new Size(751, 114);
+            pictureBox.Size = new Size(388, 366);
             pictureBox.BackgroundImageLayout = ImageLayout.Zoom;
-            pictureBox.BackgroundImage = new Bitmap($"../../../quizimg/{list[id].imageName}");
+            if(list[id].imageName != "") pictureBox.BackgroundImage = new Bitmap($"../../../quizimg/{list[id].imageName}");
+            else pictureBox.BackgroundImage = new Bitmap($"../../../quizimg/default.png");
             panel.Controls.Add(pictureBox);
+            lbQuestionText.Text = list[id].questionText;
             radiobutton1.Text = list[id].Raspunsuri[2];
             radiobutton2.Text = list[id].Raspunsuri[1];
             radiobutton3.Text = list[id].Raspunsuri[0];
