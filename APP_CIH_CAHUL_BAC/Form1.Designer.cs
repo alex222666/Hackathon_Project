@@ -3150,7 +3150,7 @@
             radiobutton1.CheckedState.InnerColor = Color.White;
             radiobutton1.CheckedState.InnerOffset = -4;
             radiobutton1.Font = new Font("Comic Sans MS", 10.8F, FontStyle.Bold);
-            radiobutton1.Location = new Point(394, 258);
+            radiobutton1.Location = new Point(394, 262);
             radiobutton1.Name = "radiobutton1";
             radiobutton1.Size = new Size(569, 61);
             radiobutton1.TabIndex = 51;
@@ -3169,7 +3169,7 @@
             radiobutton2.CheckedState.InnerColor = Color.White;
             radiobutton2.CheckedState.InnerOffset = -4;
             radiobutton2.Font = new Font("Comic Sans MS", 10.8F, FontStyle.Bold);
-            radiobutton2.Location = new Point(394, 182);
+            radiobutton2.Location = new Point(394, 195);
             radiobutton2.Name = "radiobutton2";
             radiobutton2.Size = new Size(569, 61);
             radiobutton2.TabIndex = 50;
@@ -3188,7 +3188,7 @@
             radiobutton3.CheckedState.InnerColor = Color.White;
             radiobutton3.CheckedState.InnerOffset = -4;
             radiobutton3.Font = new Font("Comic Sans MS", 10.8F, FontStyle.Bold);
-            radiobutton3.Location = new Point(394, 120);
+            radiobutton3.Location = new Point(394, 118);
             radiobutton3.Name = "radiobutton3";
             radiobutton3.Size = new Size(569, 61);
             radiobutton3.TabIndex = 49;
