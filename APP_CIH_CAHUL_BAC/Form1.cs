@@ -18,15 +18,6 @@ namespace APP_CIH_CAHUL_BAC
             Application.Exit();
         }
 
-        private async void guna2Button3_Click(object sender, EventArgs e)
-        {
-            guna2Panel20.Visible = false;
-            guna2Panel2.Visible = false;
-            MainForm mainForm = new MainForm();
-            mainForm.Show();
-
-        }
-
         private void guna2Button4_Click(object sender, EventArgs e)
         {
             Process.Start("explorer", "file:///C:/Users/N0%20N4M3/Desktop/APP%20CIH%20CAHUL%20BAC%20(2)%202/APP%20CIH%20CAHUL%20BAC/APP_CIH_CAHUL_BAC/APP_CIH_CAHUL_BAC/pdf/info.pdf");
@@ -70,7 +61,7 @@ namespace APP_CIH_CAHUL_BAC
             pictureBox.BackgroundImageLayout = ImageLayout.Zoom;
             try
             {
-                pictureBox.BackgroundImage = new Bitmap($"../../../quizimg/{list[id].imageName}");
+                pictureBox.BackgroundImage = new Bitmap($"../../../quizimg/info/{list[id].imageName}");
             }
             catch
             {
