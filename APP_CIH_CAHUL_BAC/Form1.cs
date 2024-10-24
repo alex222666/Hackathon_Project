@@ -131,6 +131,10 @@ namespace APP_CIH_CAHUL_BAC
             }
             return shuffledArray;
         }
+        private void GetQuiz(int number)
+        {
+
+        }
         private void guna2Button18_Click(object sender, EventArgs e)
         {
             guna2Panel20.Visible = true;
@@ -182,6 +186,11 @@ namespace APP_CIH_CAHUL_BAC
         }
 
         private void btQuiz10_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void qz_Click(object sender, EventArgs e)
         {
 
         }
