@@ -40,7 +40,7 @@ namespace APP_CIH_CAHUL_BAC
             {
                 connection.Open();
                 //SqliteCommand command = new SqliteCommand("SELECT * FROM Intrebari",connection);
-                SqliteCommand command = new SqliteCommand("SELECT * FROM Intrebari", connection);
+                SqliteCommand command = new SqliteCommand("SELECT * FROM IntrebariInfo", connection);
                 SqliteDataReader reader = command.ExecuteReader();
                 while (reader.Read())
                 {
