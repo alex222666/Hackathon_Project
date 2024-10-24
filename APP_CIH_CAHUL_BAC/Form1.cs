@@ -118,78 +118,45 @@ namespace APP_CIH_CAHUL_BAC
         }
 
         //Functie care amesteca array-urile
-        static int[] ShuffleArray(int[] array)
+        static Quizs[] ShuffleArray(Quizs[] array)
         {
             Random rand = new Random();
-            int[] shuffledArray = (int[])array.Clone(); // Create a copy of the original array
+            Quizs[] shuffledArray = (Quizs[])array.Clone(); // Create a copy of the original array
             for (int i = shuffledArray.Length - 1; i > 0; i--)
             {
                 int j = rand.Next(0, i + 1);
-                int temp = shuffledArray[i];
+                int temp = shuffledArray[i].id;
                 shuffledArray[i] = shuffledArray[j];
-                shuffledArray[j] = temp;
+                shuffledArray[j].id = temp;
             }
             return shuffledArray;
         }
+        struct Quizs
+        {
+            public int id;
+            public string answer;
+        }
+        Quizs[] quiz = new Quizs[10]; 
         private void GetQuiz(int number)
         {
-
+            for(int i = number * 10 - 10; i < number * 10; i++)
+            {
+                quiz[i-(number*10-10)].id = i+1;
+            }
+            quiz=ShuffleArray(quiz);
         }
-        private void guna2Button18_Click(object sender, EventArgs e)
+        private void btQuiz_Click(object sender, EventArgs e)
         {
             guna2Panel20.Visible = true;
             guna2Panel2.Visible = false;
             guna2Panel14.Visible = false;
+            Guna2Button varianta = (Guna2Button)sender;
+            GetQuiz(int.Parse(varianta.Text));
             db = new database1();
-            list = db.getData();
+            list = db.getData("Info",int.Parse(varianta.Text)*10-10,int.Parse(varianta.Text)*10);
             id = new Random().Next(0, list.Count);
             placeDataOn(ref panel2, ref list);
         }
-        private void btQuiz2_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void btQuiz3_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void btQuiz4_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void btQuiz5_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void btQuiz6_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void btQuiz7_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void btQuiz8_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void btQuiz9_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void btQuiz10_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void qz_Click(object sender, EventArgs e)
         {
 

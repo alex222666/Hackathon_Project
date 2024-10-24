@@ -2687,7 +2687,7 @@
             btQuiz1.TabIndex = 40;
             btQuiz1.Text = "1";
             btQuiz1.TextOffset = new Point(2, 0);
-            btQuiz1.Click += guna2Button18_Click;
+            btQuiz1.Click += btQuiz_Click ;
             // 
             // btQuiz10
             // 
@@ -2712,7 +2712,7 @@
             btQuiz10.TabIndex = 37;
             btQuiz10.Text = "10";
             btQuiz10.TextOffset = new Point(2, 0);
-            btQuiz10.Click += btQuiz10_Click;
+            btQuiz10.Click += btQuiz_Click;
             // 
             // btQuiz9
             // 
@@ -2737,7 +2737,7 @@
             btQuiz9.TabIndex = 36;
             btQuiz9.Text = "9";
             btQuiz9.TextOffset = new Point(2, 0);
-            btQuiz9.Click += btQuiz9_Click;
+            btQuiz9.Click += btQuiz_Click;
             // 
             // btQuiz8
             // 
@@ -2762,7 +2762,7 @@
             btQuiz8.TabIndex = 37;
             btQuiz8.Text = "8";
             btQuiz8.TextOffset = new Point(2, 0);
-            btQuiz8.Click += btQuiz8_Click;
+            btQuiz8.Click += btQuiz_Click;
             // 
             // btQuiz7
             // 
@@ -2787,7 +2787,7 @@
             btQuiz7.TabIndex = 38;
             btQuiz7.Text = "7";
             btQuiz7.TextOffset = new Point(2, 0);
-            btQuiz7.Click += btQuiz7_Click;
+            btQuiz7.Click += btQuiz_Click;
             // 
             // btQuiz6
             // 
@@ -2812,7 +2812,7 @@
             btQuiz6.TabIndex = 39;
             btQuiz6.Text = "6";
             btQuiz6.TextOffset = new Point(2, 0);
-            btQuiz6.Click += btQuiz6_Click;
+            btQuiz6.Click += btQuiz_Click;
             // 
             // btQuiz5
             // 
@@ -2837,7 +2837,7 @@
             btQuiz5.TabIndex = 35;
             btQuiz5.Text = "5";
             btQuiz5.TextOffset = new Point(2, 0);
-            btQuiz5.Click += btQuiz5_Click;
+            btQuiz5.Click += btQuiz_Click;
             // 
             // btQuiz4
             // 
@@ -2862,7 +2862,7 @@
             btQuiz4.TabIndex = 36;
             btQuiz4.Text = "4";
             btQuiz4.TextOffset = new Point(2, 0);
-            btQuiz4.Click += btQuiz4_Click;
+            btQuiz4.Click += btQuiz_Click;
             // 
             // btQuiz3
             // 
@@ -2887,7 +2887,7 @@
             btQuiz3.TabIndex = 37;
             btQuiz3.Text = "3";
             btQuiz3.TextOffset = new Point(2, 0);
-            btQuiz3.Click += btQuiz3_Click;
+            btQuiz3.Click += btQuiz_Click;
             // 
             // btQuiz2
             // 
@@ -2912,7 +2912,7 @@
             btQuiz2.TabIndex = 34;
             btQuiz2.Text = "2";
             btQuiz2.TextOffset = new Point(2, 0);
-            btQuiz2.Click += btQuiz2_Click;
+            btQuiz2.Click += btQuiz_Click;
             // 
             // pictureBox32
             // 

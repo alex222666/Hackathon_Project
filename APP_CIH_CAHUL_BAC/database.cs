@@ -33,14 +33,14 @@ namespace APP_CIH_CAHUL_BAC
         {
             this.connectionString = "Data Source=bacalaureat_app_database.db";
         }
-        public List<Intrebare> getData()
+        public List<Intrebare> getData(string materie,int min, int max)
         {
             List<Intrebare> data = new List<Intrebare>();
             using (var connection = new SqliteConnection(this.connectionString))
             {
                 connection.Open();
                 //SqliteCommand command = new SqliteCommand("SELECT * FROM Intrebari",connection);
-                SqliteCommand command = new SqliteCommand("SELECT * FROM IntrebariInfo", connection);
+                SqliteCommand command = new SqliteCommand($"SELECT * FROM Intrebari{materie} where id>={min} and id<={max}", connection);
                 SqliteDataReader reader = command.ExecuteReader();
                 while (reader.Read())
                 {
