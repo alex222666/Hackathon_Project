@@ -67,7 +67,7 @@ namespace APP_CIH_CAHUL_BAC
             pictureBox.BackgroundImageLayout = ImageLayout.Zoom;
             try
             {
-                pictureBox.BackgroundImage = new Bitmap($"../../../quizimg/info/{list[quiz[id].id].imageName}");
+                pictureBox.BackgroundImage = new Bitmap($"../../../quizimg/info/{list[quiz[id].id % 10].imageName}");
             }
             catch
             {
@@ -75,19 +75,14 @@ namespace APP_CIH_CAHUL_BAC
             }
             panel.Controls.Add(pictureBox);
             //OutOfArray din cauza ca nu este id cu +10
-            lbQuestionText.Text = list[quiz[id].id].questionText;
-            radiobutton1.Text = list[quiz[id].id].Raspunsuri[2];
-            radiobutton2.Text = list[quiz[id].id].Raspunsuri[1];
-            radiobutton3.Text = list[quiz[id].id].Raspunsuri[0];
-            radiobutton1.Tag = list[quiz[id].id].Raspunsuri[2];
-            radiobutton2.Tag = list[quiz[id].id].Raspunsuri[1];
-            radiobutton3.Tag = list[quiz[id].id].Raspunsuri[0];
+            lbQuestionText.Text = list[quiz[id].id % 10].questionText;
+            radiobutton1.Text = list[quiz[id].id % 10].Raspunsuri[2];
+            radiobutton2.Text = list[quiz[id].id % 10].Raspunsuri[1];
+            radiobutton3.Text = list[quiz[id].id % 10].Raspunsuri[0];
+            radiobutton1.Tag = list[quiz[id].id % 10].Raspunsuri[2];
+            radiobutton2.Tag = list[quiz[id].id % 10].Raspunsuri[1];
+            radiobutton3.Tag = list[quiz[id].id % 10].Raspunsuri[0];
         }
-        public void plcaedataChange(ref Panel panel, int nr)
-        {
-
-        }
-
         private void inainte_Click(object sender, EventArgs e)
         {
             foreach (Control c in panel1.Controls)
@@ -102,6 +97,7 @@ namespace APP_CIH_CAHUL_BAC
                 }
             }
             //if (list.Count != 0) list.RemoveAt(id);
+            id += 1;
             if (id == 10)
             {
                 panel1.Controls.Clear();
@@ -112,9 +108,7 @@ namespace APP_CIH_CAHUL_BAC
                 score.Location = new Point(258, 102);
                 panel1.Controls.Add(score);
                 return;
-            }
-            id += 1;
-            placeDataOn(ref panel2, list);
+            }else placeDataOn(ref panel2, list);
         }
         private void inapoi_Click(object sender, EventArgs e)
         {
@@ -185,7 +179,9 @@ namespace APP_CIH_CAHUL_BAC
         }
         private void qz_Click(object sender, EventArgs e)
         {
-
+            Guna2Button button= (Guna2Button)sender;
+            id = int.Parse(button.Text)-1;
+            placeDataOn(ref panel2, list);
         }
     }
 }
