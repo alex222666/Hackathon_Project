@@ -383,7 +383,7 @@
             guna2Button20 = new Guna.UI2.WinForms.Guna2Button();
             guna2Button21 = new Guna.UI2.WinForms.Guna2Button();
             inainte = new Guna.UI2.WinForms.Guna2Button();
-            guna2Button22 = new Guna.UI2.WinForms.Guna2Button();
+            inapoi = new Guna.UI2.WinForms.Guna2Button();
             pictureBox33 = new PictureBox();
             pictureBox34 = new PictureBox();
             guna2Button23 = new Guna.UI2.WinForms.Guna2Button();
@@ -2687,7 +2687,7 @@
             btQuiz1.TabIndex = 40;
             btQuiz1.Text = "1";
             btQuiz1.TextOffset = new Point(2, 0);
-            btQuiz1.Click += btQuiz_Click ;
+            btQuiz1.Click += btQuiz_Click;
             // 
             // btQuiz10
             // 
@@ -3092,7 +3092,7 @@
             guna2Panel21.Controls.Add(guna2Button20);
             guna2Panel21.Controls.Add(guna2Button21);
             guna2Panel21.Controls.Add(inainte);
-            guna2Panel21.Controls.Add(guna2Button22);
+            guna2Panel21.Controls.Add(inapoi);
             guna2Panel21.Controls.Add(pictureBox33);
             guna2Panel21.Controls.Add(pictureBox34);
             guna2Panel21.Controls.Add(guna2Button23);
@@ -3284,33 +3284,34 @@
             inainte.TextOffset = new Point(1, -2);
             inainte.Click += inainte_Click;
             // 
-            // guna2Button22
+            // inapoi
             // 
-            guna2Button22.BackColor = Color.FromArgb(223, 230, 233);
-            guna2Button22.BorderColor = Color.Red;
-            guna2Button22.BorderRadius = 5;
-            guna2Button22.BorderThickness = 2;
-            guna2Button22.CustomBorderColor = Color.Red;
-            guna2Button22.CustomizableEdges = customizableEdges30;
-            guna2Button22.DisabledState.BorderColor = Color.DarkGray;
-            guna2Button22.DisabledState.CustomBorderColor = Color.DarkGray;
-            guna2Button22.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
-            guna2Button22.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
-            guna2Button22.FillColor = Color.FromArgb(223, 230, 233);
-            guna2Button22.FocusedColor = Color.Red;
-            guna2Button22.Font = new Font("Comic Sans MS", 12F, FontStyle.Bold, GraphicsUnit.Point, 204);
-            guna2Button22.ForeColor = Color.Red;
-            guna2Button22.ImageAlign = HorizontalAlignment.Left;
-            guna2Button22.ImageOffset = new Point(11, -2);
-            guna2Button22.ImageSize = new Size(33, 33);
-            guna2Button22.Location = new Point(21, 540);
-            guna2Button22.Name = "guna2Button22";
-            guna2Button22.PressedColor = Color.Red;
-            guna2Button22.ShadowDecoration.CustomizableEdges = customizableEdges31;
-            guna2Button22.Size = new Size(121, 40);
-            guna2Button22.TabIndex = 49;
-            guna2Button22.Text = "Înapoi";
-            guna2Button22.TextOffset = new Point(1, -2);
+            inapoi.BackColor = Color.FromArgb(223, 230, 233);
+            inapoi.BorderColor = Color.Red;
+            inapoi.BorderRadius = 5;
+            inapoi.BorderThickness = 2;
+            inapoi.CustomBorderColor = Color.Red;
+            inapoi.CustomizableEdges = customizableEdges30;
+            inapoi.DisabledState.BorderColor = Color.DarkGray;
+            inapoi.DisabledState.CustomBorderColor = Color.DarkGray;
+            inapoi.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
+            inapoi.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
+            inapoi.FillColor = Color.FromArgb(223, 230, 233);
+            inapoi.FocusedColor = Color.Red;
+            inapoi.Font = new Font("Comic Sans MS", 12F, FontStyle.Bold, GraphicsUnit.Point, 204);
+            inapoi.ForeColor = Color.Red;
+            inapoi.ImageAlign = HorizontalAlignment.Left;
+            inapoi.ImageOffset = new Point(11, -2);
+            inapoi.ImageSize = new Size(33, 33);
+            inapoi.Location = new Point(21, 540);
+            inapoi.Name = "inapoi";
+            inapoi.PressedColor = Color.Red;
+            inapoi.ShadowDecoration.CustomizableEdges = customizableEdges31;
+            inapoi.Size = new Size(121, 40);
+            inapoi.TabIndex = 49;
+            inapoi.Text = "Înapoi";
+            inapoi.TextOffset = new Point(1, -2);
+            inapoi.Click += inapoi_Click;
             // 
             // pictureBox33
             // 
@@ -3909,7 +3910,7 @@
         private Guna.UI2.WinForms.Guna2Button guna2Button20;
         private Guna.UI2.WinForms.Guna2Button guna2Button21;
         private Guna.UI2.WinForms.Guna2Button inainte;
-        private Guna.UI2.WinForms.Guna2Button guna2Button22;
+        private Guna.UI2.WinForms.Guna2Button inapoi;
         private PictureBox pictureBox33;
         private PictureBox pictureBox34;
         private Guna.UI2.WinForms.Guna2Button guna2Button23;
