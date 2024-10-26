@@ -74,6 +74,7 @@ namespace APP_CIH_CAHUL_BAC
                 pictureBox.BackgroundImage = new Bitmap($"../../../quizimg/default.png");
             }
             panel.Controls.Add(pictureBox);
+            //OutOfArray din cauza ca nu este id cu +10
             lbQuestionText.Text = list[quiz[id].id].questionText;
             radiobutton1.Text = list[quiz[id].id].Raspunsuri[2];
             radiobutton2.Text = list[quiz[id].id].Raspunsuri[1];
