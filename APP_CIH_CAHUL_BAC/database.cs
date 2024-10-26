@@ -13,15 +13,15 @@ namespace APP_CIH_CAHUL_BAC
         public string questionText { get; set; }
         public string imageName { get; set; }
         public List<string> Raspunsuri { get; set; }
-        public List<string> Corecte { get; set; }
+        public string Corecte { get; set; }
 
-        public Intrebare(long id, string questionText, string imgName, string r1, string r2, string r3, string c1, string c2)
+        public Intrebare(long id, string questionText, string imgName, string r1, string r2, string r3, string c1)
         {
             this.Id = id;
             this.questionText = questionText;
             this.imageName = imgName;
             this.Raspunsuri = new List<string> { r1, r2, r3 };
-            this.Corecte = new List<string> { c1, c2 };
+            this.Corecte = c1;
         }
     }
 
@@ -40,7 +40,7 @@ namespace APP_CIH_CAHUL_BAC
             {
                 connection.Open();
                 //SqliteCommand command = new SqliteCommand("SELECT * FROM Intrebari",connection);
-                SqliteCommand command = new SqliteCommand($"SELECT * FROM Intrebari{materie} where id>={min} and id<={max}", connection);
+                SqliteCommand command = new SqliteCommand($"SELECT * FROM Intrebari{materie} where id>{min} and id<={max}", connection);
                 SqliteDataReader reader = command.ExecuteReader();
                 while (reader.Read())
                 {
@@ -51,8 +51,7 @@ namespace APP_CIH_CAHUL_BAC
                     string rs2 = Convert.ToString(reader["Raspuns2"]);
                     string rs3 = Convert.ToString(reader["Raspuns3"]);
                     string c1 = Convert.ToString(reader["Corect"]);
-                    string c2 = Convert.ToString(reader["Corect1"]);
-                    data.Add(new Intrebare(id, intrebare, image, rs1, rs2, rs3, c1, c2));
+                    data.Add(new Intrebare(id, intrebare, image, rs1, rs2, rs3, c1));
                 }
                 reader.Close();
                 connection.Close();

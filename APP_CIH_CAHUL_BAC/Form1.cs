@@ -53,7 +53,7 @@ namespace APP_CIH_CAHUL_BAC
         int score = 0;
         int id;
 
-        public void placeDataOn(ref Panel panel, ref List<Intrebare> list)
+        public void placeDataOn(ref Panel panel, List<Intrebare> list)
         {
             panel.Controls.Clear();
             PictureBox pictureBox = new PictureBox();
@@ -75,6 +75,10 @@ namespace APP_CIH_CAHUL_BAC
             radiobutton1.Tag = list[id].Raspunsuri[2];
             radiobutton2.Tag = list[id].Raspunsuri[1];
             radiobutton3.Tag = list[id].Raspunsuri[0];
+        }
+        public void plcaedataChange(ref Panel panel, int nr)
+        {
+
         }
 
         private void inainte_Click(object sender, EventArgs e)
@@ -102,7 +106,7 @@ namespace APP_CIH_CAHUL_BAC
                 return;
             }
             id = new Random().Next(0, list.Count);
-            placeDataOn(ref panel2, ref list);
+            placeDataOn(ref panel2,list);
         }
 
         private void guna2Button20_Click(object sender, EventArgs e)
@@ -155,7 +159,7 @@ namespace APP_CIH_CAHUL_BAC
             db = new database1();
             list = db.getData("Info",int.Parse(varianta.Text)*10-10,int.Parse(varianta.Text)*10);
             id = new Random().Next(0, list.Count);
-            placeDataOn(ref panel2, ref list);
+            placeDataOn(ref panel2,list);
         }
         private void qz_Click(object sender, EventArgs e)
         {
