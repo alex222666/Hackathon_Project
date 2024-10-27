@@ -1,6 +1,7 @@
 using Guna.UI2.WinForms;
 using Guna.UI2.WinForms.Suite;
 using System.Diagnostics;
+using System.IO.Pipes;
 
 namespace APP_CIH_CAHUL_BAC
 {
@@ -8,8 +9,9 @@ namespace APP_CIH_CAHUL_BAC
     {
         struct Quizs
         {
-            public int id;
+            public int id { get; set; }
             public string answer;
+            public string Answer { get { return answer ?? "DefaultAnswer"; } set { answer = value; } }
         }
         Quizs[] quiz = new Quizs[10];
         int[] randomid = new int[10];
@@ -112,6 +114,14 @@ namespace APP_CIH_CAHUL_BAC
                 }
             }
         }
+        private void verifyAnsers()
+        {
+            for(int i = 0; i < 10; i++)
+            {
+                string answer=quiz[i].answer;
+                score += list[randomid[i] % 10].Corecte.Contains(quiz[i].Answer) ? 1 : 0;
+            }
+        }
         private void inainte_Click(object sender, EventArgs e)  
         {
             foreach (Control c in panel1.Controls)
@@ -126,12 +136,10 @@ namespace APP_CIH_CAHUL_BAC
                 }
             }
             id += 1;
-            //if (list.Count != 0) list.RemoveAt(id);
             if (id == 10)
             {
-                //panel1.Controls.Clear();
+                verifyAnsers();
                 showScore();
-                //return;
             }else placeDataOn(ref panel2, list);
         }
         private void inapoi_Click(object sender, EventArgs e)
