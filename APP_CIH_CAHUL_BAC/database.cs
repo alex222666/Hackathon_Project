@@ -9,13 +9,13 @@ namespace APP_CIH_CAHUL_BAC
 {
     public class Intrebare
     {
-        public long Id { get; set; }
+        public int Id { get; set; }
         public string questionText { get; set; }
         public string imageName { get; set; }
         public List<string> Raspunsuri { get; set; }
         public string Corecte { get; set; }
 
-        public Intrebare(long id, string questionText, string imgName, string r1, string r2, string r3, string c1)
+        public Intrebare(int id, string questionText, string imgName, string r1, string r2, string r3, string c1)
         {
             this.Id = id;
             this.questionText = questionText;
