@@ -7,6 +7,7 @@ namespace APP_CIH_CAHUL_BAC
 {
     public partial class Form1 : Form
     {
+        private readonly string Username="AkoForU";
         struct Quizs
         {
             public int id { get; set; }
@@ -27,22 +28,6 @@ namespace APP_CIH_CAHUL_BAC
         {
             Application.Exit();
         }
-
-        private void guna2Button4_Click(object sender, EventArgs e)
-        {
-            Process.Start("explorer", "file:///C:/Users/N0%20N4M3/Desktop/APP%20CIH%20CAHUL%20BAC%20(2)%202/APP%20CIH%20CAHUL%20BAC/APP_CIH_CAHUL_BAC/APP_CIH_CAHUL_BAC/pdf/info.pdf");
-        }
-
-        private void guna2Button5_Click(object sender, EventArgs e)
-        {
-            Process.Start("explorer", "file:///C:/Users/N0%20N4M3/Desktop/playlist.htm");
-        }
-
-        private void guna2Button6_Click(object sender, EventArgs e)
-        {
-            Process.Start("explorer", "https://ance.gov.md/content/informatica");
-        }
-
         private void guna2Button3_Click_1(object sender, EventArgs e)
         {
             guna2Panel20.Visible = false;
