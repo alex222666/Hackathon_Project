@@ -5,6 +5,10 @@ using Microsoft.VisualBasic.ApplicationServices;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO.Pipes;
+using static System.ComponentModel.Design.ObjectSelectorEditor;
+using static System.Formats.Asn1.AsnWriter;
+using System.Windows.Forms;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace APP_CIH_CAHUL_BAC
 {
@@ -49,6 +53,8 @@ namespace APP_CIH_CAHUL_BAC
             time.Text = dt.AddSeconds(timp).ToString("HH:mm:ss");
             if (timp == 0)
             {
+                inainte.Enabled = false;
+                inapoi.Enabled = false;
                 verifyAnsers();
                 showScore();
                 secunde.Stop();
@@ -60,10 +66,130 @@ namespace APP_CIH_CAHUL_BAC
         }
         private void guna2Button3_Click_1(object sender, EventArgs e)
         {
+            //Sarcici de lucru
+            //pbD pdL pdMa pdMe pdJ pdV 145max
+            ShowScoreWeekly();
+
             guna2Panel20.Visible = false;
             guna2Panel2.Visible = false;
             guna2Panel14.Visible = true;
         }
+        private void ShowScoreWeekly()
+        {
+            List<QuizScoreWeekly>tmp=EveryScoreWeek();
+            double pasi = MaximScoreWeek();
+            DateTime dateTime = DateTime.Now;
+            Console.WriteLine((int)dateTime.DayOfWeek);
+            foreach (QuizScoreWeekly s in tmp)
+            {
+                if ((int)dateTime.DayOfWeek == s.Day) puncteAzi.Text = s.Score.ToString();
+                switch (s.Day)
+                {
+                    case 1:
+                        {
+                            pbL.Size=new Size(pbL.Width, pbL.Height+Convert.ToInt32(pasi*s.Score));
+                            pbL.Location=new Point(pbL.Location.X, pbL.Location.Y-Convert.ToInt32(pasi * s.Score));
+                            lbPntsL.Location=new Point(lbPntsL.Location.X, lbPntsL.Location.Y-Convert.ToInt32(pasi * s.Score));
+                            lbPntsL.Text = s.Score.ToString();
+                        }break;
+                    case 2:
+                        {
+                            pbMa.Size = new Size(pbMa.Width, pbMa.Height + Convert.ToInt32(pasi * s.Score));
+                            pbMa.Location = new Point(pbMa.Location.X, pbMa.Location.Y - Convert.ToInt32(pasi * s.Score));
+                            lbPntsMa.Location = new Point(lbPntsMa.Location.X, lbPntsMa.Location.Y - Convert.ToInt32(pasi * s.Score));
+                            lbPntsMa.Text = s.Score.ToString();
+                        }
+                        break;
+                    case 3:
+                        {
+                            pbMe.Size = new Size(pbMe.Width, pbMe.Height + Convert.ToInt32(pasi * s.Score));
+                            pbMe.Location = new Point(pbMe.Location.X, pbMe.Location.Y - Convert.ToInt32(pasi * s.Score));
+                            lbPntsMe.Location = new Point(lbPntsMe.Location.X, lbPntsMe.Location.Y - Convert.ToInt32(pasi * s.Score));
+                            lbPntsMe.Text = s.Score.ToString();
+                        }
+                        break;
+                    case 4:
+                        {
+                            pbJ.Size = new Size(pbJ.Width, pbJ.Height + Convert.ToInt32(pasi * s.Score));
+                            pbJ.Location = new Point(pbJ.Location.X, pbJ.Location.Y - Convert.ToInt32(pasi * s.Score));
+                            lbPntsJ.Location = new Point(lbPntsJ.Location.X, lbPntsJ.Location.Y - Convert.ToInt32(pasi * s.Score));
+                            lbPntsJ.Text = s.Score.ToString();
+                        }
+                        break;
+                    case 5:
+                        {
+                            pbV.Size = new Size(pbV.Width, pbV.Height + Convert.ToInt32(pasi * s.Score));
+                            pbV.Location = new Point(pbV.Location.X, pbV.Location.Y - Convert.ToInt32(pasi * s.Score));
+                            lbPntsV.Location = new Point(lbPntsV.Location.X, lbPntsV.Location.Y - Convert.ToInt32(pasi * s.Score));
+                            lbPntsV.Text = s.Score.ToString();
+                        }
+                        break;
+                    case 6:
+                        {
+                            pbS.Size = new Size(pbS.Width, pbS.Height + Convert.ToInt32(pasi * s.Score));
+                            pbS.Location = new Point(pbS.Location.X, pbS.Location.Y - Convert.ToInt32(pasi * s.Score));
+                            lbPntsS.Location = new Point(lbPntsS.Location.X, lbPntsS.Location.Y - Convert.ToInt32(pasi * s.Score));
+                            lbPntsS.Text = s.Score.ToString();
+                        }
+                        break;
+                    case 7:
+                        {
+                            pbD.Size = new Size(pbD.Width, pbD.Height + Convert.ToInt32(pasi * s.Score));
+                            pbD.Location = new Point(pbD.Location.X, pbD.Location.Y - Convert.ToInt32(pasi * s.Score));
+                            lbPntsD.Location = new Point(lbPntsD.Location.X, lbPntsD.Location.Y - Convert.ToInt32(pasi * s.Score));
+                            lbPntsD.Text = s.Score.ToString();
+                        }
+                        break;
+                }
+            }
+        }
+        private double MaximScoreWeek()
+        {
+            //SELECT max(Score) FROM WeeklyQuizScoreInfo where User={_id}
+            string stringsql = $"SELECT max(Score) FROM WeeklyQuizScore{materie} where User ={_id}";
+            double tmp=0;
+            using (SqliteConnection connection = new SqliteConnection(ConnectionString))
+            {
+                connection.Open();
+                using (var command = new SqliteCommand(stringsql, connection))
+                {
+                    using (SqliteDataReader reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            tmp=reader.GetInt32(0);
+                        }
+                    }
+                }
+            }
+            return 100/tmp;
+        }
+        private List<QuizScoreWeekly> EveryScoreWeek()
+        {
+            List<QuizScoreWeekly>data=new List<QuizScoreWeekly> ();
+            //SELECT max(Score) FROM WeeklyQuizScoreInfo where User={_id}
+            string stringsql = $"SELECT Day,Score FROM WeeklyQuizScore{materie} where User ={_id}";
+
+            using (SqliteConnection connection = new SqliteConnection(ConnectionString))
+            {
+                connection.Open();
+                using (var command = new SqliteCommand(stringsql, connection))
+                {
+                    using (SqliteDataReader reader = command.ExecuteReader())
+                    {
+                        while(reader.Read())
+                        {
+                            QuizScoreWeekly tmp = new QuizScoreWeekly();
+                            tmp.Day=reader.GetInt32(0);
+                            tmp.Score=reader.GetInt32(1);
+                            data.Add(tmp);
+                        }
+                    }
+                }
+            }
+            return data;
+        }
+
 
         private void guna2TileButton1_Click(object sender, EventArgs e)
         {
@@ -220,6 +346,7 @@ namespace APP_CIH_CAHUL_BAC
                 inainte.Enabled = false;
                 inapoi.Enabled = false;
                 verifyAnsers();
+                secunde.Stop();
                 showScore();
             }
             placeDataOn(ref panel2, list);
@@ -241,6 +368,7 @@ namespace APP_CIH_CAHUL_BAC
         private void guna2Button19_Click(object sender, EventArgs e)
         {
             secunde.Stop();
+            ShowScoreWeekly();
             guna2Panel20.Visible = false;
             guna2Panel2.Visible = false;
             guna2Panel14.Visible = true;
@@ -285,7 +413,6 @@ namespace APP_CIH_CAHUL_BAC
             placeDataOn(ref panel2, list);
             checkedVerify();
         }
-
         private void btRezolvaQuiz_Click(object sender, EventArgs e)
         {
             guna2Panel21.Controls.Remove(tmp);
