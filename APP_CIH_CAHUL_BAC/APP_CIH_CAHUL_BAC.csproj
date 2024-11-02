@@ -17,12 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Data.Sqlite" Version="8.0.2" />
-    <PackageReference Include="Microsoft.Data.Sqlite.Core" Version="8.0.2" />
-    <PackageReference Include="SQLitePCLRaw.bundle_e_sqlite3" Version="2.1.8" />
-    <PackageReference Include="SQLitePCLRaw.core" Version="2.1.8" />
-    <PackageReference Include="SQLitePCLRaw.lib.e_sqlite3" Version="2.1.8" />
-    <PackageReference Include="System.Data.SQLite" Version="1.0.118" />
+    <PackageReference Include="Microsoft.Data.Sqlite" Version="8.0.10" />
   </ItemGroup>
 
   <ItemGroup>
@@ -48,7 +43,10 @@
 
   <ItemGroup>
     <None Update="bacalaureat_app_database.db">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ScorQuiz.db">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 
