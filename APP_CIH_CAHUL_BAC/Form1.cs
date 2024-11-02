@@ -11,9 +11,8 @@ namespace APP_CIH_CAHUL_BAC
     public partial class Form1 : Form
     {
         const string ConnectionString = "Data Source=ScorQuiz.db";
-        private readonly string Username="AkoForU";
+        private readonly string Username = "AkoForU";
         private readonly int _id = 0;
-        private int slquiz;
         string materie = "Info";
         System.Windows.Forms.Timer secunde = new System.Windows.Forms.Timer
         {
@@ -35,6 +34,13 @@ namespace APP_CIH_CAHUL_BAC
             guna2Panel14.Visible = false;
             secunde.Tick += secunde_Tick;
             DoubleBuffered = true;
+            ScoreChangeText();
+        }
+        public void ScoreChangeText()
+        {
+            lbTotalPoints.Text = VerifyTotalPoints().ToString();
+            progressbar.Value = VerifyTotalPoints();
+            procentage.Text = VerifyTotalPoints() + "%";
         }
         DateTime dt = new DateTime();
         public void secunde_Tick(object sender, EventArgs e)
@@ -61,6 +67,7 @@ namespace APP_CIH_CAHUL_BAC
 
         private void guna2TileButton1_Click(object sender, EventArgs e)
         {
+            ScoreChangeText();
             guna2Panel20.Visible = false;
             guna2Panel2.Visible = true;
             guna2Panel14.Visible = false;
@@ -98,7 +105,7 @@ namespace APP_CIH_CAHUL_BAC
                 pictureBox.BackgroundImage = new Bitmap($"../../../quizimg/default.png");
             }
             panel.Controls.Add(pictureBox);
-            //OutOfArray din cauza ca nu este id cu +10
+            //OutOfArray din cauza ca nu este id cu +10 (SolvedAlready)
             lbQuestionText.Text = list[randomid[id] % 10].questionText;
             radiobutton1.Text = list[randomid[id] % 10].Raspunsuri[2];
             radiobutton2.Text = list[randomid[id] % 10].Raspunsuri[1];
@@ -125,7 +132,7 @@ namespace APP_CIH_CAHUL_BAC
         }
         private void verifyAnsers()
         {
-            for(int i = 0; i < 10; i++)
+            for (int i = 0; i < 10; i++)
             {
                 score += list[randomid[i] % 10].Corecte.Contains(quiz[i].Answer) ? 1 : 0;
             }
@@ -140,7 +147,7 @@ namespace APP_CIH_CAHUL_BAC
                     connection.Open();
                     using (var command = new SqliteCommand(stringsql, connection))
                     {
-                        command.Parameters.AddWithValue("@quiz", slquiz);
+                        command.Parameters.AddWithValue("@quiz", QzLb);
                         command.Parameters.AddWithValue("@score", score);
                         command.Parameters.AddWithValue("@user", _id);
                         // Use ExecuteNonQuery for INSERT/UPDATE/DELETE
@@ -182,7 +189,7 @@ namespace APP_CIH_CAHUL_BAC
                 connection.Open();
                 using (var command = new SqliteCommand(stringsql, connection))
                 {
-                    command.Parameters.AddWithValue("@quiz", slquiz);
+                    command.Parameters.AddWithValue("@quiz", QzLb);
                     command.Parameters.AddWithValue("@user", _id);
                     using (SqliteDataReader reader = command.ExecuteReader())
                     {
@@ -207,11 +214,11 @@ namespace APP_CIH_CAHUL_BAC
                     ((RadioButton)c).Checked = false;
                 }
             }
-            if(id!=9)id+=1;
+            if (id != 9) id += 1;
             else if (id == 9)
             {
-                inainte.Enabled= false;
-                inapoi.Enabled=false;
+                inainte.Enabled = false;
+                inapoi.Enabled = false;
                 verifyAnsers();
                 showScore();
             }
@@ -249,7 +256,7 @@ namespace APP_CIH_CAHUL_BAC
                 int j = rand.Next(0, i + 1);
                 int temp = shuffledArray[i];
                 shuffledArray[i] = shuffledArray[j];
-                shuffledArray[j]= temp;
+                shuffledArray[j] = temp;
             }
             return shuffledArray;
         }
@@ -261,22 +268,36 @@ namespace APP_CIH_CAHUL_BAC
             }
             randomid = ShuffleArray(randomid);
         }
-        
+        int QzLb;
         private void btQuiz_Click(object sender, EventArgs e)
         {
+            Guna2Button varianta = (Guna2Button)sender;
+            QzLb = int.Parse(varianta.Text);
+            lbQuiz.Text = $"Quiz:{QzLb}";
+            btRezolvaQuiz.Enabled = true;
+            lbScore.Text = $"Score:{VerifyScore()}";
+
+        }
+        private void qz_Click(object sender, EventArgs e)
+        {
+            Guna2Button button = (Guna2Button)sender;
+            id = int.Parse(button.Text) - 1;
+            placeDataOn(ref panel2, list);
+            checkedVerify();
+        }
+
+        private void btRezolvaQuiz_Click(object sender, EventArgs e)
+        {
             guna2Panel21.Controls.Remove(tmp);
-            panel1.Visible=true;
+            panel1.Visible = true;
             guna2Panel20.Visible = true;
             guna2Panel2.Visible = false;
             guna2Panel14.Visible = false;
             inainte.Enabled = true;
             inapoi.Enabled = true;
-            Guna2Button varianta = (Guna2Button)sender;
-            GetQuiz(int.Parse(varianta.Text));
+            GetQuiz(QzLb);
             db = new database1();
-            list = db.getData("Info", int.Parse(varianta.Text) * 10 - 10, int.Parse(varianta.Text) * 10);
-            slquiz=int.Parse(varianta.Text);
-            //id = new Random().Next(0, list.Count);
+            list = db.getData("Info", QzLb * 10 - 10, QzLb * 10);
             timp = 300;
             secunde.Start();
             score = 0;
@@ -284,20 +305,13 @@ namespace APP_CIH_CAHUL_BAC
             id = 0;
             if (materie == "Info")
             {
-                lbvarianta.Text = $"Informatica Quiz: Varianta {varianta.Text}";
+                lbvarianta.Text = $"Informatica Quiz: Varianta {QzLb}";
             }
             else
             {
-                lbvarianta.Text = $"Matematica Quiz: Varianta {varianta.Text}";
+                lbvarianta.Text = $"Matematica Quiz: Varianta {QzLb}";
             }
             placeDataOn(ref panel2, list);
-        }
-        private void qz_Click(object sender, EventArgs e)
-        {
-            Guna2Button button= (Guna2Button)sender;
-            id = int.Parse(button.Text)-1;
-            placeDataOn(ref panel2, list);
-            checkedVerify();
         }
     }
 }
