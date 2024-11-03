@@ -10,14 +10,16 @@ using static System.Formats.Asn1.AsnWriter;
 using System.Windows.Forms;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using System.Configuration;
+using System.Text;
 
 namespace APP_CIH_CAHUL_BAC
 {
     public partial class Form1 : Form
     {
+        
         const string ConnectionString = "Data Source=ScorQuiz.db";
-        private readonly string Username = "AkoForU";
-        private readonly int _id = 0;
+        public readonly string Username = "AkoForU";
+        public readonly int _id = 0;
         string materie = "Info";
         Point defaultPositionPhoto;
         Point defaultPositionScore;
@@ -38,8 +40,10 @@ namespace APP_CIH_CAHUL_BAC
         public Form1()
         {
             InitializeComponent();
-            defaultPositionPhoto = new Point(pbL.Location.X,pbL.Location.Y);
-            defaultPositionScore = new Point(pbL.Location.X+9, pbL.Location.Y-30);
+            PremiumVerify();
+            label1.Text = $"Salut {Username}!";
+            defaultPositionPhoto = new Point(pbL.Location.X, pbL.Location.Y);
+            defaultPositionScore = new Point(pbL.Location.X + 9, pbL.Location.Y - 30);
             guna2Panel20.Visible = false;
             guna2Panel14.Visible = false;
             secunde.Tick += secunde_Tick;
@@ -83,7 +87,7 @@ namespace APP_CIH_CAHUL_BAC
         }
         private void ShowScoreWeekly()
         {
-            List<QuizScoreWeekly>tmp=EveryScoreWeek();
+            List<QuizScoreWeekly> tmp = EveryScoreWeek();
             double pasi = MaximScoreWeek();
             DateTime dateTime = DateTime.Now;
             foreach (QuizScoreWeekly s in tmp)
@@ -93,14 +97,15 @@ namespace APP_CIH_CAHUL_BAC
                 {
                     case 1:
                         {
-                            pbL.Location = new Point(pbL.Location.X,defaultPositionPhoto.Y);
-                            lbPntsL.Location=new Point(lbPntsL.Location.X, defaultPositionScore.Y);
-                            pbL.Size=new Size(pbL.Width,0);
-                            pbL.Size=new Size(pbL.Width, pbL.Height+Convert.ToInt32(pasi*s.Score));
-                            pbL.Location=new Point(pbL.Location.X, pbL.Location.Y-Convert.ToInt32(pasi * s.Score));
-                            lbPntsL.Location=new Point(lbPntsL.Location.X, lbPntsL.Location.Y-Convert.ToInt32(pasi * s.Score));
+                            pbL.Location = new Point(pbL.Location.X, defaultPositionPhoto.Y);
+                            lbPntsL.Location = new Point(lbPntsL.Location.X, defaultPositionScore.Y);
+                            pbL.Size = new Size(pbL.Width, 0);
+                            pbL.Size = new Size(pbL.Width, pbL.Height + Convert.ToInt32(pasi * s.Score));
+                            pbL.Location = new Point(pbL.Location.X, pbL.Location.Y - Convert.ToInt32(pasi * s.Score));
+                            lbPntsL.Location = new Point(lbPntsL.Location.X, lbPntsL.Location.Y - Convert.ToInt32(pasi * s.Score));
                             lbPntsL.Text = s.Score.ToString();
-                        }break;
+                        }
+                        break;
                     case 2:
                         {
                             pbMa.Location = new Point(pbMa.Location.X, defaultPositionPhoto.Y);
@@ -174,7 +179,7 @@ namespace APP_CIH_CAHUL_BAC
         {
             //SELECT max(Score) FROM WeeklyQuizScoreInfo where User={_id}
             string stringsql = $"SELECT max(Score) FROM WeeklyQuizScore{materie} where User ={_id}";
-            double tmp=0;
+            double tmp = 0;
             using (SqliteConnection connection = new SqliteConnection(ConnectionString))
             {
                 connection.Open();
@@ -184,16 +189,16 @@ namespace APP_CIH_CAHUL_BAC
                     {
                         if (reader.Read())
                         {
-                            tmp=reader.GetInt32(0);
+                            tmp = reader.GetInt32(0);
                         }
                     }
                 }
             }
-            return 100/tmp;
+            return 100 / tmp;
         }
         private List<QuizScoreWeekly> EveryScoreWeek()
         {
-            List<QuizScoreWeekly>data=new List<QuizScoreWeekly> ();
+            List<QuizScoreWeekly> data = new List<QuizScoreWeekly>();
             //SELECT max(Score) FROM WeeklyQuizScoreInfo where User={_id}
             string stringsql = $"SELECT Day,Score FROM WeeklyQuizScore{materie} where User ={_id}";
 
@@ -204,11 +209,11 @@ namespace APP_CIH_CAHUL_BAC
                 {
                     using (SqliteDataReader reader = command.ExecuteReader())
                     {
-                        while(reader.Read())
+                        while (reader.Read())
                         {
                             QuizScoreWeekly tmp = new QuizScoreWeekly();
-                            tmp.Day=reader.GetInt32(0);
-                            tmp.Score=reader.GetInt32(1);
+                            tmp.Day = reader.GetInt32(0);
+                            tmp.Score = reader.GetInt32(1);
                             data.Add(tmp);
                         }
                     }
@@ -222,17 +227,17 @@ namespace APP_CIH_CAHUL_BAC
             List<QuizScoreWeekly> tmp = EveryScoreWeek();
             DateTime dateTime = DateTime.Now;
             int dayscore = 0;
-            foreach(var s in tmp)
+            foreach (var s in tmp)
             {
                 if (s.Day == (int)dateTime.DayOfWeek)
                 {
-                    dayscore=s.Score;
+                    dayscore = s.Score;
                 }
             }
             //INSERT INTO WeeklyQuizScoreInfo (Day, Scor) VALUES(0,1) ON CONFLICT(Day) DO UPDATE SET Scor = excluded.Scor
             if (score > oldScore)
             {
-                string stringsql = $"INSERT INTO WeeklyQuizScoreInfo (Day, Score, User) VALUES({(int)dateTime.DayOfWeek},{score-oldScore+dayscore},{_id}) ON CONFLICT(Day) DO UPDATE SET Score = excluded.Score";
+                string stringsql = $"INSERT INTO WeeklyQuizScoreInfo (Day, Score, User) VALUES({(int)dateTime.DayOfWeek},{score - oldScore + dayscore},{_id}) ON CONFLICT(Day) DO UPDATE SET Score = excluded.Score";
 
                 using (SqliteConnection connection = new SqliteConnection(ConnectionString))
                 {
@@ -494,5 +499,42 @@ namespace APP_CIH_CAHUL_BAC
             }
             placeDataOn(ref panel2, list);
         }
+        public void PremiumVerify()
+        {
+            int premium = 0;
+            string stringsql = $"SELECT premium FROM Users where id={_id}";
+            using (SqliteConnection connection = new SqliteConnection(ConnectionString))
+            {
+                connection.Open();
+                using (var command = new SqliteCommand(stringsql, connection))
+                {
+                    using (SqliteDataReader reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            premium = reader.GetInt32(0);
+                        }
+                    }
+                }
+            }
+            if(premium == 1)
+            {
+                label20.Visible = false;
+                label19.Text = "Incearca jocul Activat";
+                btActivate.Text = "Play";
+            }
+        }
+        private void btActivate_Click(object sender, EventArgs e)
+        {
+            //SELECT premium FROM Users where id=1
+            PremiumVerify();
+            if (btActivate.Text == "Play")MessageBox.Show("GameModeWOWY");
+            else
+            {
+                ActivationKey tmp = new ActivationKey(this);
+                tmp.ShowDialog();
+            }
+        }
+
     }
 }
