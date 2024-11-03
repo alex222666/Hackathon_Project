@@ -23,8 +23,8 @@ namespace APP_CIH_CAHUL_BAC
             var inputHash = SHA256.HashData(inputBytes);
             return Convert.ToHexString(inputHash);
         }
-        private readonly Form1 _form;
-        public ActivationKey(Form1 tmp)
+        private readonly MainPage _form;
+        public ActivationKey(MainPage tmp)
         {
             _form = tmp;
             InitializeComponent();

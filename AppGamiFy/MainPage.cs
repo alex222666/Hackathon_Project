@@ -14,7 +14,7 @@ using System.Text;
 
 namespace APP_CIH_CAHUL_BAC
 {
-    public partial class Form1 : Form
+    public partial class MainPage : Form
     {
         
         const string ConnectionString = "Data Source=ScorQuiz.db";
@@ -37,7 +37,7 @@ namespace APP_CIH_CAHUL_BAC
         }
         Quizs[] quiz = new Quizs[10];
         int[] randomid = new int[10];
-        public Form1()
+        public MainPage()
         {
             InitializeComponent();
             PremiumVerify();
