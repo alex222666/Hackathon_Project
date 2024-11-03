@@ -9,6 +9,7 @@ using static System.ComponentModel.Design.ObjectSelectorEditor;
 using static System.Formats.Asn1.AsnWriter;
 using System.Windows.Forms;
 using static System.Runtime.InteropServices.JavaScript.JSType;
+using System.Configuration;
 
 namespace APP_CIH_CAHUL_BAC
 {
@@ -18,6 +19,9 @@ namespace APP_CIH_CAHUL_BAC
         private readonly string Username = "AkoForU";
         private readonly int _id = 0;
         string materie = "Info";
+        Point defaultPositionPhoto;
+        Point defaultPositionScore;
+        int oldScore = 0;
         System.Windows.Forms.Timer secunde = new System.Windows.Forms.Timer
         {
             Interval = 1000
@@ -34,6 +38,8 @@ namespace APP_CIH_CAHUL_BAC
         public Form1()
         {
             InitializeComponent();
+            defaultPositionPhoto = new Point(pbL.Location.X,pbL.Location.Y);
+            defaultPositionScore = new Point(pbL.Location.X+9, pbL.Location.Y-30);
             guna2Panel20.Visible = false;
             guna2Panel14.Visible = false;
             secunde.Tick += secunde_Tick;
@@ -56,6 +62,7 @@ namespace APP_CIH_CAHUL_BAC
                 inainte.Enabled = false;
                 inapoi.Enabled = false;
                 verifyAnsers();
+                AdaugareScor();
                 showScore();
                 secunde.Stop();
             }
@@ -79,7 +86,6 @@ namespace APP_CIH_CAHUL_BAC
             List<QuizScoreWeekly>tmp=EveryScoreWeek();
             double pasi = MaximScoreWeek();
             DateTime dateTime = DateTime.Now;
-            Console.WriteLine((int)dateTime.DayOfWeek);
             foreach (QuizScoreWeekly s in tmp)
             {
                 if ((int)dateTime.DayOfWeek == s.Day) puncteAzi.Text = s.Score.ToString();
@@ -87,6 +93,9 @@ namespace APP_CIH_CAHUL_BAC
                 {
                     case 1:
                         {
+                            pbL.Location = new Point(pbL.Location.X,defaultPositionPhoto.Y);
+                            lbPntsL.Location=new Point(lbPntsL.Location.X, defaultPositionScore.Y);
+                            pbL.Size=new Size(pbL.Width,0);
                             pbL.Size=new Size(pbL.Width, pbL.Height+Convert.ToInt32(pasi*s.Score));
                             pbL.Location=new Point(pbL.Location.X, pbL.Location.Y-Convert.ToInt32(pasi * s.Score));
                             lbPntsL.Location=new Point(lbPntsL.Location.X, lbPntsL.Location.Y-Convert.ToInt32(pasi * s.Score));
@@ -94,6 +103,9 @@ namespace APP_CIH_CAHUL_BAC
                         }break;
                     case 2:
                         {
+                            pbMa.Location = new Point(pbMa.Location.X, defaultPositionPhoto.Y);
+                            lbPntsMa.Location = new Point(lbPntsMa.Location.X, defaultPositionScore.Y);
+                            pbL.Size = new Size(pbL.Width, 0);
                             pbMa.Size = new Size(pbMa.Width, pbMa.Height + Convert.ToInt32(pasi * s.Score));
                             pbMa.Location = new Point(pbMa.Location.X, pbMa.Location.Y - Convert.ToInt32(pasi * s.Score));
                             lbPntsMa.Location = new Point(lbPntsMa.Location.X, lbPntsMa.Location.Y - Convert.ToInt32(pasi * s.Score));
@@ -102,6 +114,9 @@ namespace APP_CIH_CAHUL_BAC
                         break;
                     case 3:
                         {
+                            pbMe.Location = new Point(pbMe.Location.X, defaultPositionPhoto.Y);
+                            lbPntsMe.Location = new Point(lbPntsMe.Location.X, defaultPositionScore.Y);
+                            pbMe.Size = new Size(pbL.Width, 0);
                             pbMe.Size = new Size(pbMe.Width, pbMe.Height + Convert.ToInt32(pasi * s.Score));
                             pbMe.Location = new Point(pbMe.Location.X, pbMe.Location.Y - Convert.ToInt32(pasi * s.Score));
                             lbPntsMe.Location = new Point(lbPntsMe.Location.X, lbPntsMe.Location.Y - Convert.ToInt32(pasi * s.Score));
@@ -110,6 +125,9 @@ namespace APP_CIH_CAHUL_BAC
                         break;
                     case 4:
                         {
+                            pbJ.Location = new Point(pbJ.Location.X, defaultPositionPhoto.Y);
+                            lbPntsJ.Location = new Point(lbPntsJ.Location.X, defaultPositionScore.Y);
+                            pbJ.Size = new Size(pbL.Width, 0);
                             pbJ.Size = new Size(pbJ.Width, pbJ.Height + Convert.ToInt32(pasi * s.Score));
                             pbJ.Location = new Point(pbJ.Location.X, pbJ.Location.Y - Convert.ToInt32(pasi * s.Score));
                             lbPntsJ.Location = new Point(lbPntsJ.Location.X, lbPntsJ.Location.Y - Convert.ToInt32(pasi * s.Score));
@@ -118,6 +136,9 @@ namespace APP_CIH_CAHUL_BAC
                         break;
                     case 5:
                         {
+                            pbV.Location = new Point(pbV.Location.X, defaultPositionPhoto.Y);
+                            lbPntsV.Location = new Point(lbPntsV.Location.X, defaultPositionScore.Y);
+                            pbV.Size = new Size(pbL.Width, 0);
                             pbV.Size = new Size(pbV.Width, pbV.Height + Convert.ToInt32(pasi * s.Score));
                             pbV.Location = new Point(pbV.Location.X, pbV.Location.Y - Convert.ToInt32(pasi * s.Score));
                             lbPntsV.Location = new Point(lbPntsV.Location.X, lbPntsV.Location.Y - Convert.ToInt32(pasi * s.Score));
@@ -126,14 +147,20 @@ namespace APP_CIH_CAHUL_BAC
                         break;
                     case 6:
                         {
+                            pbS.Location = new Point(pbS.Location.X, defaultPositionPhoto.Y);
+                            lbPntsS.Location = new Point(lbPntsS.Location.X, defaultPositionScore.Y);
+                            pbS.Size = new Size(pbL.Width, 0);
                             pbS.Size = new Size(pbS.Width, pbS.Height + Convert.ToInt32(pasi * s.Score));
                             pbS.Location = new Point(pbS.Location.X, pbS.Location.Y - Convert.ToInt32(pasi * s.Score));
                             lbPntsS.Location = new Point(lbPntsS.Location.X, lbPntsS.Location.Y - Convert.ToInt32(pasi * s.Score));
                             lbPntsS.Text = s.Score.ToString();
                         }
                         break;
-                    case 7:
+                    case 0:
                         {
+                            pbD.Location = new Point(pbD.Location.X, defaultPositionPhoto.Y);
+                            lbPntsD.Location = new Point(lbPntsD.Location.X, defaultPositionScore.Y);
+                            pbD.Size = new Size(pbL.Width, 0);
                             pbD.Size = new Size(pbD.Width, pbD.Height + Convert.ToInt32(pasi * s.Score));
                             pbD.Location = new Point(pbD.Location.X, pbD.Location.Y - Convert.ToInt32(pasi * s.Score));
                             lbPntsD.Location = new Point(lbPntsD.Location.X, lbPntsD.Location.Y - Convert.ToInt32(pasi * s.Score));
@@ -190,7 +217,33 @@ namespace APP_CIH_CAHUL_BAC
             return data;
         }
 
+        public void AdaugareScor()
+        {
+            List<QuizScoreWeekly> tmp = EveryScoreWeek();
+            DateTime dateTime = DateTime.Now;
+            int dayscore = 0;
+            foreach(var s in tmp)
+            {
+                if (s.Day == (int)dateTime.DayOfWeek)
+                {
+                    dayscore=s.Score;
+                }
+            }
+            //INSERT INTO WeeklyQuizScoreInfo (Day, Scor) VALUES(0,1) ON CONFLICT(Day) DO UPDATE SET Scor = excluded.Scor
+            if (score > oldScore)
+            {
+                string stringsql = $"INSERT INTO WeeklyQuizScoreInfo (Day, Score, User) VALUES({(int)dateTime.DayOfWeek},{score-oldScore+dayscore},{_id}) ON CONFLICT(Day) DO UPDATE SET Score = excluded.Score";
 
+                using (SqliteConnection connection = new SqliteConnection(ConnectionString))
+                {
+                    connection.Open();
+                    using (var command = new SqliteCommand(stringsql, connection))
+                    {
+                        command.ExecuteNonQuery();
+                    }
+                }
+            }
+        }
         private void guna2TileButton1_Click(object sender, EventArgs e)
         {
             ScoreChangeText();
@@ -262,8 +315,8 @@ namespace APP_CIH_CAHUL_BAC
             {
                 score += list[randomid[i] % 10].Corecte.Contains(quiz[i].Answer) ? 1 : 0;
             }
-            int tmp = VerifyScore();
-            if (score > tmp)
+            oldScore = VerifyScore();
+            if (score > oldScore)
             {
                 string stringsql = "INSERT INTO quizScoreInfo(Intrebare, Scor, User) VALUES(@quiz, @score, @user) " +
                     "ON CONFLICT(Intrebare, User) DO UPDATE SET Scor = excluded.Scor";
@@ -346,6 +399,7 @@ namespace APP_CIH_CAHUL_BAC
                 inainte.Enabled = false;
                 inapoi.Enabled = false;
                 verifyAnsers();
+                AdaugareScor();
                 secunde.Stop();
                 showScore();
             }
