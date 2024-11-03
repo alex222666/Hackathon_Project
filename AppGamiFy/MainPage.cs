@@ -11,6 +11,7 @@ using System.Windows.Forms;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using System.Configuration;
 using System.Text;
+using Fighting_Game;
 
 namespace APP_CIH_CAHUL_BAC
 {
@@ -18,8 +19,8 @@ namespace APP_CIH_CAHUL_BAC
     {
         
         const string ConnectionString = "Data Source=ScorQuiz.db";
-        public readonly string Username = "AkoForU";
-        public readonly int _id = 0;
+        public string Username = "";
+        public readonly int _id = int.MinValue;
         string materie = "Info";
         Point defaultPositionPhoto;
         Point defaultPositionScore;
@@ -37,11 +38,12 @@ namespace APP_CIH_CAHUL_BAC
         }
         Quizs[] quiz = new Quizs[10];
         int[] randomid = new int[10];
-        public MainPage()
+        public MainPage(int id,string username)
         {
             InitializeComponent();
-            PremiumVerify();
-            label1.Text = $"Salut {Username}!";
+            _id = id;
+            Username = username;
+            label1.Text = $"Salut {username}!";
             defaultPositionPhoto = new Point(pbL.Location.X, pbL.Location.Y);
             defaultPositionScore = new Point(pbL.Location.X + 9, pbL.Location.Y - 30);
             guna2Panel20.Visible = false;
@@ -49,6 +51,7 @@ namespace APP_CIH_CAHUL_BAC
             secunde.Tick += secunde_Tick;
             DoubleBuffered = true;
             ScoreChangeText();
+            PremiumVerify();
         }
         public void ScoreChangeText()
         {
@@ -357,7 +360,14 @@ namespace APP_CIH_CAHUL_BAC
                     {
                         if (reader.Read())
                         {
-                            return reader.GetInt32(0);
+                            try
+                            {
+                                return reader.GetInt32(0);
+                            }
+                            catch
+                            {
+                                return 0;
+                            }
                         }
                     }
                 }
@@ -528,7 +538,11 @@ namespace APP_CIH_CAHUL_BAC
         {
             //SELECT premium FROM Users where id=1
             PremiumVerify();
-            if (btActivate.Text == "Play")MessageBox.Show("GameModeWOWY");
+            if (btActivate.Text == "Play") {
+                MenuGame menu = new MenuGame(this);
+                menu.Show();
+                this.Visible = false;
+            }
             else
             {
                 ActivationKey tmp = new ActivationKey(this);

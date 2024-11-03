@@ -3564,7 +3564,7 @@
             qz2.TextOffset = new Point(2, 0);
             qz2.Click += qz_Click;
             // 
-            // Form1
+            // MainPage
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -3575,7 +3575,7 @@
             Controls.Add(guna2Panel20);
             Controls.Add(guna2Panel14);
             FormBorderStyle = FormBorderStyle.None;
-            Name = "Form1";
+            Name = "MainPage";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "u";
             guna2Panel1.ResumeLayout(false);
