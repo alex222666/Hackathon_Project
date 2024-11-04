@@ -111,7 +111,7 @@ namespace APP_CIH_CAHUL_BAC_SIGN_IN__SIGN_UP
 
         private async void close_logo_Click(object sender, EventArgs e)
         {
-            for (double i = 1; i > 0; i -= 0.01)
+            for (double i = 1; i > 0; i -= 0.05)
             {
                 this.Opacity = i;
                 await Task.Delay(6); // Задержка в 5 миллисекунд
@@ -122,7 +122,7 @@ namespace APP_CIH_CAHUL_BAC_SIGN_IN__SIGN_UP
         private async void lbl_sign_in_Click(object sender, EventArgs e)
         {
             // Плавное исчезновение текущей формы
-            for (double i = 1; i > 0; i -= 0.01)
+            for (double i = 1; i > 0; i -= 0.05)
             {
                 this.Opacity = i;
                 await Task.Delay(6);
@@ -142,7 +142,7 @@ namespace APP_CIH_CAHUL_BAC_SIGN_IN__SIGN_UP
             timer.Tick += new EventHandler((s, ev) =>
             {
                 if (sign_In.Opacity < 1)
-                    sign_In.Opacity += 0.02;  // Увеличиваем прозрачность
+                    sign_In.Opacity += 0.05;  // Увеличиваем прозрачность
                 else
                     timer.Stop();  // Останавливаем таймер, когда форма становится полностью видимой
             });
@@ -154,7 +154,7 @@ namespace APP_CIH_CAHUL_BAC_SIGN_IN__SIGN_UP
         private async void ter_de_util_Click(object sender, EventArgs e)
         {
             // Плавное исчезновение текущей формы
-            for (double i = 1; i > 0; i -= 0.01)
+            for (double i = 1; i > 0; i -= 0.05)
             {
                 this.Opacity = i;
                 await Task.Delay(6);
@@ -174,7 +174,7 @@ namespace APP_CIH_CAHUL_BAC_SIGN_IN__SIGN_UP
             timer.Tick += new EventHandler((s, ev) =>
             {
                 if (termenii_de_utilizare.Opacity < 1)
-                    termenii_de_utilizare.Opacity += 0.02;  // Увеличиваем прозрачность
+                    termenii_de_utilizare.Opacity += 0.05;  // Увеличиваем прозрачность
                 else
                     timer.Stop();  // Останавливаем таймер, когда форма становится полностью видимой
             });
@@ -186,7 +186,7 @@ namespace APP_CIH_CAHUL_BAC_SIGN_IN__SIGN_UP
         private async void pol_de_conf_Click(object sender, EventArgs e)
         {
             // Плавное исчезновение текущей формы
-            for (double i = 1; i > 0; i -= 0.01)
+            for (double i = 1; i > 0; i -= 0.05)
             {
                 this.Opacity = i;
                 await Task.Delay(6);
@@ -206,7 +206,7 @@ namespace APP_CIH_CAHUL_BAC_SIGN_IN__SIGN_UP
             timer.Tick += new EventHandler((s, ev) =>
             {
                 if (politica_de_confidentialitate.Opacity < 1)
-                    politica_de_confidentialitate.Opacity += 0.02;  // Увеличиваем прозрачность
+                    politica_de_confidentialitate.Opacity += 0.05;  // Увеличиваем прозрачность
                 else
                     timer.Stop();  // Останавливаем таймер, когда форма становится полностью видимой
             });
@@ -230,7 +230,7 @@ namespace APP_CIH_CAHUL_BAC_SIGN_IN__SIGN_UP
             CheckErrors();
             if (!errorsExist){
                 CreateUser();
-                for (double i = 1; i > 0; i -= 0.01)
+                for (double i = 1; i > 0; i -= 0.05)
                 {
                     this.Opacity = i;
                     await Task.Delay(6);
@@ -248,7 +248,7 @@ namespace APP_CIH_CAHUL_BAC_SIGN_IN__SIGN_UP
                 timer.Tick += new EventHandler((s, ev) =>
                 {
                     if (sign_In.Opacity < 1)
-                        sign_In.Opacity += 0.02;  // Увеличиваем прозрачность
+                        sign_In.Opacity += 0.05;  // Увеличиваем прозрачность
                     else
                         timer.Stop();  // Останавливаем таймер, когда форма становится полностью видимой
                 });

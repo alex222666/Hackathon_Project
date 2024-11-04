@@ -12,6 +12,7 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 using System.Configuration;
 using System.Text;
 using Fighting_Game;
+using System.Linq.Expressions;
 
 namespace APP_CIH_CAHUL_BAC
 {
@@ -192,7 +193,13 @@ namespace APP_CIH_CAHUL_BAC
                     {
                         if (reader.Read())
                         {
-                            tmp = reader.GetInt32(0);
+                            try
+                            {
+                                tmp = reader.GetInt32(0);
+                            }
+                            catch { 
+                                tmp = 1; 
+                            }
                         }
                     }
                 }
@@ -203,21 +210,30 @@ namespace APP_CIH_CAHUL_BAC
         {
             List<QuizScoreWeekly> data = new List<QuizScoreWeekly>();
             //SELECT max(Score) FROM WeeklyQuizScoreInfo where User={_id}
-            string stringsql = $"SELECT Day,Score FROM WeeklyQuizScore{materie} where User ={_id}";
-
-            using (SqliteConnection connection = new SqliteConnection(ConnectionString))
+            for(int i = 0; i < 7; i++)
             {
-                connection.Open();
-                using (var command = new SqliteCommand(stringsql, connection))
+                string stringsql = $"SELECT sum(Score) from WeeklyQuizScoreInfo where User={_id} and Day={i} ";
+
+                using (SqliteConnection connection = new SqliteConnection(ConnectionString))
                 {
-                    using (SqliteDataReader reader = command.ExecuteReader())
+                    connection.Open();
+                    using (var command = new SqliteCommand(stringsql, connection))
                     {
-                        while (reader.Read())
+                        using (SqliteDataReader reader = command.ExecuteReader())
                         {
-                            QuizScoreWeekly tmp = new QuizScoreWeekly();
-                            tmp.Day = reader.GetInt32(0);
-                            tmp.Score = reader.GetInt32(1);
-                            data.Add(tmp);
+                            if (reader.Read())
+                            {
+                                QuizScoreWeekly tmp = new QuizScoreWeekly();
+                                tmp.Day = i;
+                                try {
+                                    tmp.Score = reader.GetInt32(0);
+                                }
+                                catch
+                                {
+                                    tmp.Day = 0;
+                                }
+                                data.Add(tmp);
+                            }
                         }
                     }
                 }
@@ -240,7 +256,7 @@ namespace APP_CIH_CAHUL_BAC
             //INSERT INTO WeeklyQuizScoreInfo (Day, Scor) VALUES(0,1) ON CONFLICT(Day) DO UPDATE SET Scor = excluded.Scor
             if (score > oldScore)
             {
-                string stringsql = $"INSERT INTO WeeklyQuizScoreInfo (Day, Score, User) VALUES({(int)dateTime.DayOfWeek},{score - oldScore + dayscore},{_id}) ON CONFLICT(Day) DO UPDATE SET Score = excluded.Score";
+                string stringsql = $"INSERT INTO WeeklyQuizScoreInfo (Day, Score, User) VALUES({(int)dateTime.DayOfWeek},{score - oldScore + dayscore},{_id})";
 
                 using (SqliteConnection connection = new SqliteConnection(ConnectionString))
                 {

@@ -16,7 +16,7 @@ namespace APP_CIH_CAHUL_BAC_SIGN_IN__SIGN_UP
             timer.Tick += new EventHandler((sender, e) =>
             {
                 if (this.Opacity < 1)
-                    this.Opacity += 0.02;
+                    this.Opacity += 0.05;
                 else
                     timer.Stop();
             });
@@ -56,7 +56,7 @@ namespace APP_CIH_CAHUL_BAC_SIGN_IN__SIGN_UP
 
         private async void close_lbl_Click(object sender, EventArgs e)
         {
-            for (double i = 1; i > 0; i -= 0.01)
+            for (double i = 1; i > 0; i -= 0.05)
             {
                 this.Opacity = i;
                 await Task.Delay(6);
@@ -66,7 +66,7 @@ namespace APP_CIH_CAHUL_BAC_SIGN_IN__SIGN_UP
 
         private async void btn_sign_in_Click(object sender, EventArgs e)
         {
-            for (double i = 1; i > 0; i -= 0.01)
+            for (double i = 1; i > 0; i -= 0.05)
             {
                 this.Opacity = i;
                 await Task.Delay(6);
@@ -84,7 +84,7 @@ namespace APP_CIH_CAHUL_BAC_SIGN_IN__SIGN_UP
             timer.Tick += new EventHandler((s, ev) =>
             {
                 if (sign_In.Opacity < 1)
-                    sign_In.Opacity += 0.02;  
+                    sign_In.Opacity += 0.05;  
                 else
                     timer.Stop();  
             });
@@ -95,7 +95,7 @@ namespace APP_CIH_CAHUL_BAC_SIGN_IN__SIGN_UP
 
         private async void btn_sign_up_Click(object sender, EventArgs e)
         {
-            for (double i = 1; i > 0; i -= 0.01)
+            for (double i = 1; i > 0; i -= 0.05)
             {
                 this.Opacity = i;
                 await Task.Delay(6);
@@ -112,7 +112,7 @@ namespace APP_CIH_CAHUL_BAC_SIGN_IN__SIGN_UP
             timer.Tick += new EventHandler((s, ev) =>
             {
                 if (sign_Up.Opacity < 1)
-                    sign_Up.Opacity += 0.02; 
+                    sign_Up.Opacity += 0.05; 
                 else
                     timer.Stop();  
             });

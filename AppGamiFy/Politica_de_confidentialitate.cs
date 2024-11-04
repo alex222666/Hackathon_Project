@@ -30,7 +30,7 @@ namespace APP_CIH_CAHUL_BAC_SIGN_IN__SIGN_UP
         private void Next_1_MouseEnter(object sender, EventArgs e)
         {
             // Меняем изображение на другую картинку
-            next_1.Image = Image.FromFile("../../../Button_10.png");
+            next_1.Image = Image.FromFile("../../../img/Button_10.png");
         }
 
         // Когда курсор уходит с PictureBox
