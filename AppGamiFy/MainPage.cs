@@ -18,7 +18,7 @@ namespace APP_CIH_CAHUL_BAC
 {
     public partial class MainPage : Form
     {
-        
+
         const string ConnectionString = "Data Source=ScorQuiz.db";
         public string Username = "";
         public readonly int _id = int.MinValue;
@@ -39,7 +39,7 @@ namespace APP_CIH_CAHUL_BAC
         }
         Quizs[] quiz = new Quizs[10];
         int[] randomid = new int[10];
-        public MainPage(int id,string username)
+        public MainPage(int id, string username)
         {
             InitializeComponent();
             _id = id;
@@ -49,6 +49,7 @@ namespace APP_CIH_CAHUL_BAC
             defaultPositionScore = new Point(pbL.Location.X + 9, pbL.Location.Y - 30);
             guna2Panel20.Visible = false;
             guna2Panel14.Visible = false;
+            guna2Panel22.Visible = false;
             secunde.Tick += secunde_Tick;
             DoubleBuffered = true;
             ScoreChangeText();
@@ -87,6 +88,7 @@ namespace APP_CIH_CAHUL_BAC
 
             guna2Panel20.Visible = false;
             guna2Panel2.Visible = false;
+            guna2Panel22.Visible = false;
             guna2Panel14.Visible = true;
         }
         private void ShowScoreWeekly()
@@ -274,6 +276,7 @@ namespace APP_CIH_CAHUL_BAC
             guna2Panel20.Visible = false;
             guna2Panel2.Visible = true;
             guna2Panel14.Visible = false;
+            guna2Panel22.Visible = false;
         }
 
 
@@ -457,6 +460,7 @@ namespace APP_CIH_CAHUL_BAC
             guna2Panel20.Visible = false;
             guna2Panel2.Visible = false;
             guna2Panel14.Visible = true;
+            guna2Panel22.Visible = false;
         }
 
         //Functie care amesteca array-urile
@@ -505,6 +509,7 @@ namespace APP_CIH_CAHUL_BAC
             guna2Panel20.Visible = true;
             guna2Panel2.Visible = false;
             guna2Panel14.Visible = false;
+            guna2Panel22.Visible = false;
             inainte.Enabled = true;
             inapoi.Enabled = true;
             GetQuiz(QzLb);
@@ -543,7 +548,7 @@ namespace APP_CIH_CAHUL_BAC
                     }
                 }
             }
-            if(premium == 1)
+            if (premium == 1)
             {
                 label20.Visible = false;
                 label19.Text = "Incearca jocul Activat";
@@ -554,7 +559,8 @@ namespace APP_CIH_CAHUL_BAC
         {
             //SELECT premium FROM Users where id=1
             PremiumVerify();
-            if (btActivate.Text == "Play") {
+            if (btActivate.Text == "Play")
+            {
                 MenuGame menu = new MenuGame(this);
                 menu.Show();
                 this.Visible = false;
@@ -566,5 +572,73 @@ namespace APP_CIH_CAHUL_BAC
             }
         }
 
+        private void guna2TileButton3_Click(object sender, EventArgs e)
+        {
+            guna2Panel20.Visible = false;
+            guna2Panel2.Visible = false;
+            guna2Panel14.Visible = false;
+            guna2Panel22.Visible = true;
+            int user = 1;
+            const string ConnectionString = "Data Source=Achievements.db";
+            achievementsDB db;
+            List<Achievement> achievements;
+                db = new achievementsDB();
+                achievements = db.getData();
+                int Y = 0;
+
+                using (SqliteConnection connection = new SqliteConnection(ConnectionString))
+                {
+                    connection.Open();
+                    foreach (Achievement achievement in achievements)
+                    {
+                        string stringsql = $"SELECT COUNT(*) FROM Achievements_complete WHERE id_user = {_id} AND id_achievement = {achievement.Id}";
+                        using (var command = new SqliteCommand(stringsql, connection))
+                        {
+                            long achievementCheck = (long)command.ExecuteScalar();
+                            Panel achievementPanel = new Panel
+                            {
+                                Width = guna2Panel23.Width - 50,
+                                Height = 120,
+                                Padding = new Padding(5),
+                                Location = new Point(5, Y)
+                            };
+
+                            Image image = new Bitmap($"../../../achievementsimg/{achievement.AchievementImage}bw.png");
+                            if (achievementCheck == 1) image = new Bitmap($"../../../achievementsimg/{achievement.AchievementImage}.png");
+                            PictureBox pictureBox = new PictureBox
+                            {
+                                Image = image,
+                                BackColor = Color.White,
+                                Size = new Size(100, 100),
+                                SizeMode = PictureBoxSizeMode.Zoom,
+                                Location = new Point(5, 10)
+                            };
+
+                            achievementPanel.Controls.Add(pictureBox);
+
+                            Label titleLabel = new Label
+                            {
+                                Text = achievement.AchievementName,
+                                Font = new Font("Comic Sans MS", 18, FontStyle.Bold),
+                                Location = new Point(115, 10),
+                                AutoSize = true
+                            };
+                            achievementPanel.Controls.Add(titleLabel);
+
+                            Label descriptionLabel = new Label
+                            {
+                                Text = achievement.AchievementText,
+                                Font = new Font("Comic Sans MS", 12, FontStyle.Bold),
+                                Location = new Point(115, 50),
+                                Size = new Size(achievementPanel.Width - 100, 60),
+                                AutoSize = false
+                            };
+                            achievementPanel.Controls.Add(descriptionLabel);
+                            guna2Panel23.Controls.Add(achievementPanel);
+                            Y += 120;
+                        }
+                    }
+                }
+            }
+        }
     }
-}
