@@ -113,6 +113,9 @@ namespace Fighting_Game
                 if (timp == 0)
                 {
                     secunde.Stop();
+                    btOption1.Enabled = false;
+                    btOption2.Enabled = false;
+                    btOption3.Enabled = false;
                     GetHurt();
                 }
                 else timp--;
