@@ -1,4 +1,4 @@
-using Guna.UI2.WinForms;
+﻿using Guna.UI2.WinForms;
 using Guna.UI2.WinForms.Suite;
 using Microsoft.Data.Sqlite;
 using Microsoft.VisualBasic.ApplicationServices;
@@ -15,6 +15,8 @@ using Fighting_Game;
 using System.Linq.Expressions;
 using Microsoft.VisualBasic;
 using AchievementPop;
+using SETTINGS_APP_CIH_CAHUL_BAC;
+using System.Security.Cryptography;
 
 namespace APP_CIH_CAHUL_BAC
 {
@@ -56,6 +58,7 @@ namespace APP_CIH_CAHUL_BAC
             guna2Panel20.Visible = false;
             guna2Panel14.Visible = false;
             guna2Panel22.Visible = false;
+            guna2Panel24.Visible = false;
             secunde.Tick += secunde_Tick;
             DoubleBuffered = true;
             ScoreChangeText();
@@ -67,7 +70,8 @@ namespace APP_CIH_CAHUL_BAC
             RankVerify();
             progressbar.Value = VerifyTotalPoints();
             procentage.Text = VerifyTotalPoints() + "%";
-            if (progressbar.Value == 100 && materie == "Info"){
+            if (progressbar.Value == 100 && materie == "Info")
+            {
                 if (ExistAch(5) == false)
                 {
                     InsertAchievement(5);
@@ -84,7 +88,8 @@ namespace APP_CIH_CAHUL_BAC
                     idk.Show();
                 }
             }
-            else if (progressbar.Value >= 50 && materie == "Info"){
+            else if (progressbar.Value >= 50 && materie == "Info")
+            {
                 if (ExistAch(3) == false)
                 {
                     InsertAchievement(3);
@@ -92,7 +97,8 @@ namespace APP_CIH_CAHUL_BAC
                     idk.Show();
                 }
             }
-            else if(progressbar.Value >= 25 && materie == "Info"){
+            else if (progressbar.Value >= 25 && materie == "Info")
+            {
                 if (ExistAch(2) == false)
                 {
                     InsertAchievement(2);
@@ -175,6 +181,7 @@ namespace APP_CIH_CAHUL_BAC
             guna2Panel2.Visible = false;
             guna2Panel22.Visible = false;
             guna2Panel14.Visible = true;
+            guna2Panel24.Visible = false;
         }
         private void ShowScoreWeekly()
         {
@@ -284,8 +291,9 @@ namespace APP_CIH_CAHUL_BAC
                             {
                                 tmp = reader.GetInt32(0);
                             }
-                            catch { 
-                                tmp = 1; 
+                            catch
+                            {
+                                tmp = 1;
                             }
                         }
                     }
@@ -297,7 +305,7 @@ namespace APP_CIH_CAHUL_BAC
         {
             List<QuizScoreWeekly> data = new List<QuizScoreWeekly>();
             //SELECT max(Score) FROM WeeklyQuizScoreInfo where User={_id}
-            for(int i = 0; i < 7; i++)
+            for (int i = 0; i < 7; i++)
             {
                 string stringsql = $"SELECT sum(Score) from WeeklyQuizScore{materie} where User={_id} and Day={i} ";
 
@@ -312,7 +320,8 @@ namespace APP_CIH_CAHUL_BAC
                             {
                                 QuizScoreWeekly tmp = new QuizScoreWeekly();
                                 tmp.Day = i;
-                                try {
+                                try
+                                {
                                     tmp.Score = reader.GetInt32(0);
                                 }
                                 catch
@@ -362,10 +371,11 @@ namespace APP_CIH_CAHUL_BAC
             guna2Panel2.Visible = true;
             guna2Panel14.Visible = false;
             guna2Panel22.Visible = false;
+            guna2Panel24.Visible = false;
         }
         public void RankVerify()
         {
-            int rank=0;
+            int rank = 0;
             string stringsql = sqlCommand($"Username = \"{Username}\"");
 
             using (SqliteConnection connection = new SqliteConnection(ConnectionString))
@@ -378,16 +388,18 @@ namespace APP_CIH_CAHUL_BAC
                         if (reader.Read())
                         {
                             lbTotalPoints.Text = reader.GetInt32(1).ToString();
-                            rank=reader.GetInt32(2);
+                            rank = reader.GetInt32(2);
                         }
                     }
                 }
             }
             lbrank.Text = $"Tu Ocupi locul {rank} la curs";
-            try{
+            try
+            {
                 rankPB.Image = Image.FromFile($"../../../img/rank{rank}.png");
             }
-            catch{
+            catch
+            {
                 rankPB.Dispose();
             }
             label26.Text = RankInfo(1, 0);
@@ -417,7 +429,7 @@ namespace APP_CIH_CAHUL_BAC
             }
             return false;
         }
-        public string RankInfo(int rank,int id)
+        public string RankInfo(int rank, int id)
         {
             string stringsql = sqlCommand($"Rank = {rank}");
 
@@ -430,7 +442,8 @@ namespace APP_CIH_CAHUL_BAC
                     {
                         if (reader.Read())
                         {
-                            try { 
+                            try
+                            {
                                 return reader.GetString(id).ToString();
                             }
                             catch
@@ -685,6 +698,7 @@ namespace APP_CIH_CAHUL_BAC
             guna2Panel2.Visible = false;
             guna2Panel14.Visible = true;
             guna2Panel22.Visible = false;
+            guna2Panel24.Visible = false;
         }
 
         //Functie care amesteca array-urile
@@ -734,6 +748,7 @@ namespace APP_CIH_CAHUL_BAC
             guna2Panel2.Visible = false;
             guna2Panel14.Visible = false;
             guna2Panel22.Visible = false;
+            guna2Panel24.Visible = false;
             inainte.Enabled = true;
             inapoi.Enabled = true;
             GetQuiz(QzLb);
@@ -822,67 +837,207 @@ namespace APP_CIH_CAHUL_BAC
             guna2Panel2.Visible = false;
             guna2Panel14.Visible = false;
             guna2Panel22.Visible = true;
+            guna2Panel24.Visible = false;
             int user = 1;
             const string ConnectionString = "Data Source=Achievements.db";
             achievementsDB db;
             List<Achievement> achievements;
-                db = new achievementsDB();
-                achievements = db.getData();
-                int Y = 0;
+            db = new achievementsDB();
+            achievements = db.getData();
+            int Y = 0;
 
-                using (SqliteConnection connection = new SqliteConnection(ConnectionString))
+            using (SqliteConnection connection = new SqliteConnection(ConnectionString))
+            {
+                connection.Open();
+                foreach (Achievement achievement in achievements)
                 {
-                    connection.Open();
-                    foreach (Achievement achievement in achievements)
+                    string stringsql = $"SELECT COUNT(*) FROM Achievements_complete WHERE id_user = {_id} AND id_achievement = {achievement.Id}";
+                    using (var command = new SqliteCommand(stringsql, connection))
                     {
-                        string stringsql = $"SELECT COUNT(*) FROM Achievements_complete WHERE id_user = {_id} AND id_achievement = {achievement.Id}";
-                        using (var command = new SqliteCommand(stringsql, connection))
+                        long achievementCheck = (long)command.ExecuteScalar();
+                        Panel achievementPanel = new Panel
                         {
-                            long achievementCheck = (long)command.ExecuteScalar();
-                            Panel achievementPanel = new Panel
-                            {
-                                Width = guna2Panel23.Width - 50,
-                                Height = 120,
-                                Padding = new Padding(5),
-                                Location = new Point(5, Y)
-                            };
+                            Width = guna2Panel23.Width - 50,
+                            Height = 120,
+                            Padding = new Padding(5),
+                            Location = new Point(5, Y)
+                        };
 
-                            Image image = new Bitmap($"../../../achievementsimg/{achievement.AchievementImage}bw.png");
-                            if (achievementCheck == 1) image = new Bitmap($"../../../achievementsimg/{achievement.AchievementImage}.png");
-                            PictureBox pictureBox = new PictureBox
-                            {
-                                Image = image,
-                                BackColor = Color.White,
-                                Size = new Size(100, 100),
-                                SizeMode = PictureBoxSizeMode.Zoom,
-                                Location = new Point(5, 10)
-                            };
+                        Image image = new Bitmap($"../../../achievementsimg/{achievement.AchievementImage}bw.png");
+                        if (achievementCheck == 1) image = new Bitmap($"../../../achievementsimg/{achievement.AchievementImage}.png");
+                        PictureBox pictureBox = new PictureBox
+                        {
+                            Image = image,
+                            BackColor = Color.White,
+                            Size = new Size(100, 100),
+                            SizeMode = PictureBoxSizeMode.Zoom,
+                            Location = new Point(5, 10)
+                        };
 
-                            achievementPanel.Controls.Add(pictureBox);
+                        achievementPanel.Controls.Add(pictureBox);
 
-                            Label titleLabel = new Label
-                            {
-                                Text = achievement.AchievementName,
-                                Font = new Font("Comic Sans MS", 18, FontStyle.Bold),
-                                Location = new Point(115, 10),
-                                AutoSize = true
-                            };
-                            achievementPanel.Controls.Add(titleLabel);
+                        Label titleLabel = new Label
+                        {
+                            Text = achievement.AchievementName,
+                            Font = new Font("Comic Sans MS", 18, FontStyle.Bold),
+                            Location = new Point(115, 10),
+                            AutoSize = true
+                        };
+                        achievementPanel.Controls.Add(titleLabel);
 
-                            Label descriptionLabel = new Label
-                            {
-                                Text = achievement.AchievementText,
-                                Font = new Font("Comic Sans MS", 12, FontStyle.Bold),
-                                Location = new Point(115, 50),
-                                Size = new Size(achievementPanel.Width - 100, 60),
-                                AutoSize = false
-                            };
-                            achievementPanel.Controls.Add(descriptionLabel);
-                            guna2Panel23.Controls.Add(achievementPanel);
-                            Y += 120;
-                        }
+                        Label descriptionLabel = new Label
+                        {
+                            Text = achievement.AchievementText,
+                            Font = new Font("Comic Sans MS", 12, FontStyle.Bold),
+                            Location = new Point(115, 50),
+                            Size = new Size(achievementPanel.Width - 100, 60),
+                            AutoSize = false
+                        };
+                        achievementPanel.Controls.Add(descriptionLabel);
+                        guna2Panel23.Controls.Add(achievementPanel);
+                        Y += 120;
                     }
                 }
             }
         }
+        private Image originalImage;
+
+        private bool isPasswordVisible1 = false;
+        private bool isPasswordVisible2 = false;
+        private Image eyeOpen;
+        private Image eyeClosed;
+        private void guna2TileButton6_Click(object sender, EventArgs e)
+        {
+            guna2Panel24.Visible = true;
+            guna2Panel20.Visible = false;
+            guna2Panel2.Visible = false;
+            guna2Panel14.Visible = false;
+            guna2Panel22.Visible = false;
+            originalImage = Btn1.Image;
+
+            Btn1.MouseEnter += new EventHandler(Btn1_MouseEnter);
+            Btn1.MouseLeave += new EventHandler(Btn1_MouseLeave);
+
+            eyeOpen = Image.FromFile("../../../img/open.png");
+            eyeClosed = Image.FromFile("../../../img/close.png");
+            eye1.Image = eyeClosed;
+            eye2.Image = eyeClosed;
+
+            password_current.UseSystemPasswordChar = true;
+            password_new.UseSystemPasswordChar = true;
+
+            eye1.Click += new EventHandler(Eye1_Click);
+            eye2.Click += new EventHandler(Eye2_Click);
+
+
+
+        }
+        private void Btn1_MouseEnter(object sender, EventArgs e)
+        {
+            Btn1.Image = Image.FromFile("../../../img/Button2.png");
+        }
+
+        private void Btn1_MouseLeave(object sender, EventArgs e)
+        {
+            Btn1.Image = originalImage;
+        }
+
+        private void Eye1_Click(object sender, EventArgs e)
+        {
+            isPasswordVisible1 = !isPasswordVisible1;
+
+            if (isPasswordVisible1)
+            {
+                password_current.UseSystemPasswordChar = false;
+                eye1.Image = eyeOpen;
+            }
+            else
+            {
+                password_current.UseSystemPasswordChar = true;
+                eye1.Image = eyeClosed;
+            }
+        }
+
+        private void Eye2_Click(object sender, EventArgs e)
+        {
+            isPasswordVisible2 = !isPasswordVisible2;
+
+            if (isPasswordVisible2)
+            {
+                password_new.UseSystemPasswordChar = false;
+                eye2.Image = eyeOpen;
+            }
+            else
+            {
+                password_new.UseSystemPasswordChar = true;
+                eye2.Image = eyeClosed;
+            }
+        }
+
+        private void dlt_account_Click(object sender, EventArgs e)
+        {
+            Form2 form2 = new Form2(_id, ConnectionString);
+            form2.Opacity = 0;
+            form2.StartPosition = FormStartPosition.CenterScreen;
+            form2.FormClosed += (s, args) => this.Close();
+            form2.Show();
+
+            System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
+            timer.Tick += new EventHandler((s, ev) =>
+            {
+                if (form2.Opacity < 1)
+                    form2.Opacity += 0.02;
+                else
+                    timer.Stop();
+            });
+
+            timer.Interval = 20;
+            timer.Start();
+        }
+        public string QuickHash(string input)
+        {
+            var inputBytes = Encoding.UTF8.GetBytes(input);
+            var inputHash = SHA256.HashData(inputBytes);
+            return Convert.ToHexString(inputHash);
+        }
+
+        private void Btn1_Click(object sender, EventArgs e)
+        {
+            string sqlUpdate = "Update Users SET Username = @Username, hashpsswd = @hashpsswd where Id = @Id";
+            string sqlVerification = "SELECT COUNT(1) FROM Users WHERE Id = @Id AND hashpsswd = @hashpsswd";
+            using (SqliteConnection connection = new SqliteConnection(ConnectionString))
+            {
+                connection.Open();
+
+                using (var command = new SqliteCommand(sqlVerification, connection))
+                {
+                    command.Parameters.AddWithValue("@Id", _id);
+                    command.Parameters.AddWithValue("@hashpsswd", QuickHash(password_current.Text));
+
+                    int count = Convert.ToInt32(command.ExecuteScalar());
+                    if (count == 0)
+                    {
+                        Debug.WriteLine(_id + " " + QuickHash(password_current.Text));
+                        password_current.BorderColor = Color.Red;
+                        return;
+                    }
+                }
+
+                using (var command = new SqliteCommand(sqlUpdate, connection))
+                {
+                    password_current.BorderColor = Color.FromArgb(213, 218, 223);
+                    Debug.WriteLine(Username);
+                    Debug.WriteLine(username_set.Text.Length);
+                    if (username_set.Text.Length != 0) command.Parameters.AddWithValue("@Username", username_set.Text);
+                    else command.Parameters.AddWithValue("@Username", Username);
+                    if(password_new.Text.Length != 0) command.Parameters.AddWithValue("@hashpsswd", QuickHash(password_new.Text));
+                    else command.Parameters.AddWithValue("@hashpsswd", QuickHash(password_current.Text));
+                    command.Parameters.AddWithValue("@Id", _id);
+
+                    command.ExecuteNonQuery();
+                }
+                connection.Close();
+            }
+        }
     }
+}
