@@ -1,3 +1,5 @@
+using AchievementPop;
+using APP_CIH_CAHUL_BAC;
 using Fighting_Game;
 using System.CodeDom.Compiler;
 using System.Media;
@@ -66,6 +68,13 @@ namespace Lost
         {
 
             InitializeComponent();
+            MainPage page = new MainPage();
+            if (page.ExistAch(14) == false)
+            {
+                page.InsertAchievement(14);
+                Achievements idk = new Achievements(14);
+                idk.Show();
+            }
             _app = app;
             this.Opacity = 0;
             game=new PictureBox();

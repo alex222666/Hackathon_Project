@@ -7,6 +7,8 @@ using Microsoft.VisualBasic.ApplicationServices;
 using System.Security.Principal;
 using Fighting_Game;
 using System.Windows.Forms.VisualStyles;
+using AchievementPop;
+using APP_CIH_CAHUL_BAC;
 
 
 namespace Winner
@@ -29,6 +31,13 @@ namespace Winner
 
         public JotaroWinning(FightGame tmp)
         {
+            MainPage page = new MainPage();
+            if (page.ExistAch(15) == false)
+            {
+                page.InsertAchievement(15);
+                Achievements idk = new Achievements(15);
+                idk.Show();
+            }
             this.StartPosition=FormStartPosition.CenterScreen;
             this.MinimizeBox = false;
             this.MaximizeBox = false;

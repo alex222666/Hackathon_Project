@@ -41,6 +41,10 @@ namespace APP_CIH_CAHUL_BAC
         }
         Quizs[] quiz = new Quizs[10];
         int[] randomid = new int[10];
+        public MainPage()
+        {
+
+        }
         public MainPage(int id, string username)
         {
             InitializeComponent();
@@ -63,6 +67,84 @@ namespace APP_CIH_CAHUL_BAC
             RankVerify();
             progressbar.Value = VerifyTotalPoints();
             procentage.Text = VerifyTotalPoints() + "%";
+            if (progressbar.Value == 100 && materie == "Info"){
+                if (ExistAch(5) == false)
+                {
+                    InsertAchievement(5);
+                    Achievements idk = new Achievements(5);
+                    idk.Show();
+                }
+            }
+            else if (progressbar.Value >= 75 && materie == "Info")
+            {
+                if (ExistAch(4) == false)
+                {
+                    InsertAchievement(4);
+                    Achievements idk = new Achievements(4);
+                    idk.Show();
+                }
+            }
+            else if (progressbar.Value >= 50 && materie == "Info"){
+                if (ExistAch(3) == false)
+                {
+                    InsertAchievement(3);
+                    Achievements idk = new Achievements(3);
+                    idk.Show();
+                }
+            }
+            else if(progressbar.Value >= 25 && materie == "Info"){
+                if (ExistAch(2) == false)
+                {
+                    InsertAchievement(2);
+                    Achievements idk = new Achievements(2);
+                    idk.Show();
+                }
+            }
+            if (progressbar.Value == 100 && materie == "Mate")
+            {
+                if (ExistAch(9) == false)
+                {
+                    InsertAchievement(9);
+                    Achievements idk = new Achievements(9);
+                    idk.Show();
+                }
+            }
+            else if (progressbar.Value >= 75 && materie == "Mate")
+            {
+                if (ExistAch(8) == false)
+                {
+                    InsertAchievement(8);
+                    Achievements idk = new Achievements(8);
+                    idk.Show();
+                }
+            }
+            else if (progressbar.Value >= 50 && materie == "Mate")
+            {
+                if (ExistAch(7) == false)
+                {
+                    InsertAchievement(7);
+                    Achievements idk = new Achievements(7);
+                    idk.Show();
+                }
+            }
+            else if (progressbar.Value >= 25 && materie == "Mate")
+            {
+                if (ExistAch(6) == false)
+                {
+                    InsertAchievement(6);
+                    Achievements idk = new Achievements(6);
+                    idk.Show();
+                }
+            }
+            if (VerifyIfPassAllQuiz() == 10)
+            {
+                if (ExistAch(13) == false)
+                {
+                    InsertAchievement(13);
+                    Achievements idk = new Achievements(13);
+                    idk.Show();
+                }
+            }
         }
         DateTime dt = new DateTime();
         public void secunde_Tick(object sender, EventArgs e)
@@ -313,6 +395,28 @@ namespace APP_CIH_CAHUL_BAC
             label28.Text = RankInfo(1, 1);
             label29.Text = RankInfo(2, 1);
         }
+        public bool ExistAch(int idach)
+        {
+
+            string connectionString = "Data Source=Achievements.db";
+            string stringsql = $"SELECT 1 FROM Achievements_complete WHERE id_user ={_id} and id_achievement={idach} " +
+                "UNION  ALL SELECT 0 LIMIT 1;";
+            using (SqliteConnection connection = new SqliteConnection(connectionString))
+            {
+                connection.Open();
+                using (var command = new SqliteCommand(stringsql, connection))
+                {
+                    using (SqliteDataReader reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            return Convert.ToBoolean(reader.GetInt32(0));
+                        }
+                    }
+                }
+            }
+            return false;
+        }
         public string RankInfo(int rank,int id)
         {
             string stringsql = sqlCommand($"Rank = {rank}");
@@ -368,6 +472,53 @@ namespace APP_CIH_CAHUL_BAC
             tmp = score;
             guna2Panel21.Controls.Add(tmp);
             panel1.Visible = false;
+            if (ExistAch(1) == false)
+            {
+                InsertAchievement(1);
+                Achievements idk = new Achievements(1);
+                idk.Show();
+            }
+            if (this.score == 0)
+            {
+                if (ExistAch(10) == false)
+                {
+                    InsertAchievement(10);
+                    Achievements idk = new Achievements(10);
+                    idk.Show();
+                }
+            }
+            if (this.score == 11)
+            {
+                if (ExistAch(11) == false)
+                {
+                    InsertAchievement(11);
+                    Achievements idk = new Achievements(11);
+                    idk.Show();
+                }
+            }
+            if (timp >= 240)
+            {
+                if (ExistAch(12) == false)
+                {
+                    InsertAchievement(12);
+                    Achievements idk = new Achievements(11);
+                    idk.Show();
+                }
+            }
+        }
+        public void InsertAchievement(int idach)
+        {
+            string connectionString = "Data Source=Achievements.db";
+
+            string stringsql = $"INSERT INTO Achievements_complete(id_user,id_achievement) VALUES({_id},{idach})";
+            using (SqliteConnection connection = new SqliteConnection(connectionString))
+            {
+                connection.Open();
+                using (var command = new SqliteCommand(stringsql, connection))
+                {
+                    command.ExecuteNonQuery();
+                }
+            }
         }
         public void placeDataOn(ref Panel panel, List<Intrebare> list)
         {
@@ -602,6 +753,26 @@ namespace APP_CIH_CAHUL_BAC
                 lbvarianta.Text = $"Matematica Quiz: Varianta {QzLb}";
             }
             placeDataOn(ref panel2, list);
+        }
+        public int VerifyIfPassAllQuiz()
+        {
+            //SELECT count(Scor) FROM quizScoreInfo where User=5
+            string stringsql = $"SELECT count(Scor) FROM quizScore{materie} where User={_id}";
+            using (SqliteConnection connection = new SqliteConnection(ConnectionString))
+            {
+                connection.Open();
+                using (var command = new SqliteCommand(stringsql, connection))
+                {
+                    using (SqliteDataReader reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            return reader.GetInt32(0);
+                        }
+                    }
+                }
+            }
+            return 0;
         }
         public void PremiumVerify()
         {
