@@ -37,7 +37,7 @@ namespace APP_CIH_CAHUL_BAC
             using (var connection = new SqliteConnection(this.connectionString))
             {
                 connection.Open();
-                SqliteCommand command = new SqliteCommand($"SELECT * FROM \"Achievements\";", connection);
+                SqliteCommand command = new SqliteCommand($"SELECT * FROM \"Achievements\" ", connection);
 
                 SqliteDataReader reader = command.ExecuteReader();
                 while (reader.Read())
@@ -53,5 +53,28 @@ namespace APP_CIH_CAHUL_BAC
             }
             return data;
         }
+        public List<Achievement> getData(int id_ac)
+        {
+            List<Achievement> data = new List<Achievement>();
+            using (var connection = new SqliteConnection(this.connectionString))
+            {
+                connection.Open();
+                SqliteCommand command = new SqliteCommand($"SELECT * FROM \"Achievements\" Where Id={id_ac}", connection);
+
+                SqliteDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    int id = Convert.ToInt32(reader["Id"]);
+                    string achievementImage = Convert.ToString(reader["AchievementImage"]);
+                    string achievementName = Convert.ToString(reader["AchievementName"]);
+                    string achievementText = Convert.ToString(reader["AchievementText"]);
+                    data.Add(new Achievement(id, achievementImage, achievementName, achievementText));
+                }
+                reader.Close();
+                connection.Close();
+            }
+            return data;
+        }
+        
     }
 }

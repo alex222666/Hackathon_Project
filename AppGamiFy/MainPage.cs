@@ -14,6 +14,7 @@ using System.Text;
 using Fighting_Game;
 using System.Linq.Expressions;
 using Microsoft.VisualBasic;
+using AchievementPop;
 
 namespace APP_CIH_CAHUL_BAC
 {
@@ -216,7 +217,7 @@ namespace APP_CIH_CAHUL_BAC
             //SELECT max(Score) FROM WeeklyQuizScoreInfo where User={_id}
             for(int i = 0; i < 7; i++)
             {
-                string stringsql = $"SELECT sum(Score) from WeeklyQuizScoreInfo where User={_id} and Day={i} ";
+                string stringsql = $"SELECT sum(Score) from WeeklyQuizScore{materie} where User={_id} and Day={i} ";
 
                 using (SqliteConnection connection = new SqliteConnection(ConnectionString))
                 {
@@ -260,7 +261,7 @@ namespace APP_CIH_CAHUL_BAC
             //INSERT INTO WeeklyQuizScoreInfo (Day, Scor) VALUES(0,1) ON CONFLICT(Day) DO UPDATE SET Scor = excluded.Scor
             if (score > oldScore)
             {
-                string stringsql = $"INSERT INTO WeeklyQuizScoreInfo (Day, Score, User) VALUES({(int)dateTime.DayOfWeek},{score - oldScore + dayscore},{_id})";
+                string stringsql = $"INSERT INTO WeeklyQuizScore{materie} (Day, Score, User) VALUES({(int)dateTime.DayOfWeek},{score - oldScore + dayscore},{_id})";
 
                 using (SqliteConnection connection = new SqliteConnection(ConnectionString))
                 {
@@ -344,7 +345,7 @@ namespace APP_CIH_CAHUL_BAC
                     "SUM(q.Scor) AS TotalScore," +
                     "RANK() OVER (ORDER BY SUM(q.Scor) DESC) AS Rank " +
                     "FROM " +
-                    "quizScoreInfo q " +
+                    $"quizScore{materie} q " +
                     "INNER JOIN " +
                     "Users u ON q.User = u.ID " +
                     "GROUP BY " +
@@ -417,7 +418,7 @@ namespace APP_CIH_CAHUL_BAC
             oldScore = VerifyScore();
             if (score > oldScore)
             {
-                string stringsql = "INSERT INTO quizScoreInfo(Intrebare, Scor, User) VALUES(@quiz, @score, @user) " +
+                string stringsql = $"INSERT INTO quizScore{materie}(Intrebare, Scor, User) VALUES(@quiz, @score, @user) " +
                     "ON CONFLICT(Intrebare, User) DO UPDATE SET Scor = excluded.Scor";
 
                 using (SqliteConnection connection = new SqliteConnection(ConnectionString))
