@@ -66,7 +66,7 @@ namespace APP_CIH_CAHUL_BAC
         }
         public void ScoreChangeText()
         {
-            //lbTotalPoints.Text = VerifyTotalPoints().ToString();
+            lbTotalPoints.Text = VerifyTotalPoints().ToString();
             RankVerify();
             progressbar.Value = VerifyTotalPoints();
             procentage.Text = VerifyTotalPoints() + "%";
@@ -195,6 +195,7 @@ namespace APP_CIH_CAHUL_BAC
                 {
                     case 1:
                         {
+                            pbL.Size = new Size(45, 0);
                             pbL.Location = new Point(pbL.Location.X, defaultPositionPhoto.Y);
                             lbPntsL.Location = new Point(lbPntsL.Location.X, defaultPositionScore.Y);
                             pbL.Size = new Size(pbL.Width, 0);
@@ -208,6 +209,7 @@ namespace APP_CIH_CAHUL_BAC
                         {
                             pbMa.Location = new Point(pbMa.Location.X, defaultPositionPhoto.Y);
                             lbPntsMa.Location = new Point(lbPntsMa.Location.X, defaultPositionScore.Y);
+                            pbMa.Size = new Size(45, 0);
                             pbL.Size = new Size(pbL.Width, 0);
                             pbMa.Size = new Size(pbMa.Width, pbMa.Height + Convert.ToInt32(pasi * s.Score));
                             pbMa.Location = new Point(pbMa.Location.X, pbMa.Location.Y - Convert.ToInt32(pasi * s.Score));
@@ -219,6 +221,7 @@ namespace APP_CIH_CAHUL_BAC
                         {
                             pbMe.Location = new Point(pbMe.Location.X, defaultPositionPhoto.Y);
                             lbPntsMe.Location = new Point(lbPntsMe.Location.X, defaultPositionScore.Y);
+                            pbMe.Size = new Size(45, 0);
                             pbMe.Size = new Size(pbL.Width, 0);
                             pbMe.Size = new Size(pbMe.Width, pbMe.Height + Convert.ToInt32(pasi * s.Score));
                             pbMe.Location = new Point(pbMe.Location.X, pbMe.Location.Y - Convert.ToInt32(pasi * s.Score));
@@ -228,6 +231,7 @@ namespace APP_CIH_CAHUL_BAC
                         break;
                     case 4:
                         {
+                            pbJ.Size = new Size(45, 0);
                             pbJ.Location = new Point(pbJ.Location.X, defaultPositionPhoto.Y);
                             lbPntsJ.Location = new Point(lbPntsJ.Location.X, defaultPositionScore.Y);
                             pbJ.Size = new Size(pbL.Width, 0);
@@ -239,6 +243,7 @@ namespace APP_CIH_CAHUL_BAC
                         break;
                     case 5:
                         {
+                            pbV.Size = new Size(45, 0);
                             pbV.Location = new Point(pbV.Location.X, defaultPositionPhoto.Y);
                             lbPntsV.Location = new Point(lbPntsV.Location.X, defaultPositionScore.Y);
                             pbV.Size = new Size(pbL.Width, 0);
@@ -250,6 +255,7 @@ namespace APP_CIH_CAHUL_BAC
                         break;
                     case 6:
                         {
+                            pbS.Size = new Size(45, 0);
                             pbS.Location = new Point(pbS.Location.X, defaultPositionPhoto.Y);
                             lbPntsS.Location = new Point(lbPntsS.Location.X, defaultPositionScore.Y);
                             pbS.Size = new Size(pbL.Width, 0);
@@ -261,6 +267,7 @@ namespace APP_CIH_CAHUL_BAC
                         break;
                     case 0:
                         {
+                            pbD.Size = new Size(45, 0);
                             pbD.Location = new Point(pbD.Location.X, defaultPositionPhoto.Y);
                             lbPntsD.Location = new Point(lbPntsD.Location.X, defaultPositionScore.Y);
                             pbD.Size = new Size(pbL.Width, 0);
@@ -375,7 +382,7 @@ namespace APP_CIH_CAHUL_BAC
         }
         public void RankVerify()
         {
-            int rank = 0;
+            int rank = 1;
             string stringsql = sqlCommand($"Username = \"{Username}\"");
 
             using (SqliteConnection connection = new SqliteConnection(ConnectionString))
@@ -500,7 +507,7 @@ namespace APP_CIH_CAHUL_BAC
                     idk.Show();
                 }
             }
-            if (this.score == 11)
+            if (this.score == 10)
             {
                 if (ExistAch(11) == false)
                 {
@@ -508,14 +515,14 @@ namespace APP_CIH_CAHUL_BAC
                     Achievements idk = new Achievements(11);
                     idk.Show();
                 }
-            }
-            if (timp >= 240)
-            {
-                if (ExistAch(12) == false)
+                if (timp >= 240)
                 {
-                    InsertAchievement(12);
-                    Achievements idk = new Achievements(11);
-                    idk.Show();
+                    if (ExistAch(12) == false)
+                    {
+                        InsertAchievement(12);
+                        Achievements idk = new Achievements(11);
+                        idk.Show();
+                    }
                 }
             }
         }

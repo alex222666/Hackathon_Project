@@ -5,6 +5,7 @@ using System.CodeDom.Compiler;
 using System.Media;
 using System.Numerics;
 using WMPLib;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace Lost
 {
@@ -64,17 +65,11 @@ namespace Lost
         PictureBox game;
         PictureBox over;
         private readonly Form _app;
-        public LostGame(FightGame app)
+        MainPage page; 
+        public LostGame(FightGame app,MainPage page)
         {
-
+            this.page = page;
             InitializeComponent();
-            MainPage page = new MainPage();
-            if (page.ExistAch(14) == false)
-            {
-                page.InsertAchievement(14);
-                Achievements idk = new Achievements(14);
-                idk.Show();
-            }
             _app = app;
             this.Opacity = 0;
             game=new PictureBox();
@@ -174,6 +169,13 @@ namespace Lost
             nr++;
             text.Enabled = true;
             //text.Visible = false;
+            if (page.ExistAch(14) == false)
+            {
+                page.InsertAchievement(14);
+                Achievements idk = new Achievements(14);
+                idk.Show();
+            }
+
             text.Image = Image.FromFile("../../../Photos/studymore.gif");
             talking.Play();
             SoundStop.Start();

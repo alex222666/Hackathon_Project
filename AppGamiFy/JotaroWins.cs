@@ -29,9 +29,8 @@ namespace Winner
         };
         private readonly FightGame form1;
 
-        public JotaroWinning(FightGame tmp)
+        public JotaroWinning(FightGame tmp,MainPage page)
         {
-            MainPage page = new MainPage();
             if (page.ExistAch(15) == false)
             {
                 page.InsertAchievement(15);
