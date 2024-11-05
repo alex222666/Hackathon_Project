@@ -13,6 +13,7 @@ using System.Configuration;
 using System.Text;
 using Fighting_Game;
 using System.Linq.Expressions;
+using Microsoft.VisualBasic;
 
 namespace APP_CIH_CAHUL_BAC
 {
@@ -57,7 +58,8 @@ namespace APP_CIH_CAHUL_BAC
         }
         public void ScoreChangeText()
         {
-            lbTotalPoints.Text = VerifyTotalPoints().ToString();
+            //lbTotalPoints.Text = VerifyTotalPoints().ToString();
+            RankVerify();
             progressbar.Value = VerifyTotalPoints();
             procentage.Text = VerifyTotalPoints() + "%";
         }
@@ -278,7 +280,77 @@ namespace APP_CIH_CAHUL_BAC
             guna2Panel14.Visible = false;
             guna2Panel22.Visible = false;
         }
+        public void RankVerify()
+        {
+            int rank=0;
+            string stringsql = sqlCommand($"Username = \"{Username}\"");
 
+            using (SqliteConnection connection = new SqliteConnection(ConnectionString))
+            {
+                connection.Open();
+                using (var command = new SqliteCommand(stringsql, connection))
+                {
+                    using (SqliteDataReader reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            lbTotalPoints.Text = reader.GetInt32(1).ToString();
+                            rank=reader.GetInt32(2);
+                        }
+                    }
+                }
+            }
+            lbrank.Text = $"Tu Ocupi locul {rank} la curs";
+            try{
+                rankPB.Image = Image.FromFile($"../../../img/rank{rank}.png");
+            }
+            catch{
+                rankPB.Dispose();
+            }
+            label26.Text = RankInfo(1, 0);
+            label27.Text = RankInfo(2, 0);
+            label28.Text = RankInfo(1, 1);
+            label29.Text = RankInfo(2, 1);
+        }
+        public string RankInfo(int rank,int id)
+        {
+            string stringsql = sqlCommand($"Rank = {rank}");
+
+            using (SqliteConnection connection = new SqliteConnection(ConnectionString))
+            {
+                connection.Open();
+                using (var command = new SqliteCommand(stringsql, connection))
+                {
+                    using (SqliteDataReader reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            try { 
+                                return reader.GetString(id).ToString();
+                            }
+                            catch
+                            {
+                                return string.Empty;
+                            }
+                        }
+                    }
+                }
+            }
+            return string.Empty;
+        }
+        public string sqlCommand(string condition) => "SELECT * FROM " +
+                "(SELECT " +
+                    "u.Username," +
+                    "SUM(q.Scor) AS TotalScore," +
+                    "RANK() OVER (ORDER BY SUM(q.Scor) DESC) AS Rank " +
+                    "FROM " +
+                    "quizScoreInfo q " +
+                    "INNER JOIN " +
+                    "Users u ON q.User = u.ID " +
+                    "GROUP BY " +
+                    "u.Username) " +
+                    "AS RankedUsers " +
+                 $"WHERE {condition}";
 
         database1 db;
         List<Intrebare> list;
