@@ -17,6 +17,7 @@ using Microsoft.VisualBasic;
 using AchievementPop;
 using SETTINGS_APP_CIH_CAHUL_BAC;
 using System.Security.Cryptography;
+using System.Text.RegularExpressions;
 
 namespace APP_CIH_CAHUL_BAC
 {
@@ -1008,12 +1009,10 @@ namespace APP_CIH_CAHUL_BAC
             using (SqliteConnection connection = new SqliteConnection(ConnectionString))
             {
                 connection.Open();
-
                 using (var command = new SqliteCommand(sqlVerification, connection))
                 {
                     command.Parameters.AddWithValue("@Id", _id);
                     command.Parameters.AddWithValue("@hashpsswd", QuickHash(password_current.Text));
-
                     int count = Convert.ToInt32(command.ExecuteScalar());
                     if (count == 0)
                     {
@@ -1023,14 +1022,40 @@ namespace APP_CIH_CAHUL_BAC
                     }
                 }
 
+
                 using (var command = new SqliteCommand(sqlUpdate, connection))
                 {
+                    if (username_set.Text.Length != 0)
+                    {
+                        long userCount = 0;
+                        string query = "SELECT COUNT(*) FROM Users WHERE Username = @username";
+                        SqliteCommand command2 = new SqliteCommand(query, connection);
+                        command2.Parameters.AddWithValue("@username", username_set.Text);
+                        userCount = (long)command2.ExecuteScalar();
+                        if (userCount == 0) 
+                        {
+                            Username = username_set.Text;
+                            username_set.BorderColor = Color.FromArgb(213, 218, 223);
+                        } 
+                        else username_set.BorderColor = Color.Red;
+                    }
+                    command.Parameters.AddWithValue("@Username", Username);
                     password_current.BorderColor = Color.FromArgb(213, 218, 223);
-                    Debug.WriteLine(Username);
-                    Debug.WriteLine(username_set.Text.Length);
-                    if (username_set.Text.Length != 0) command.Parameters.AddWithValue("@Username", username_set.Text);
-                    else command.Parameters.AddWithValue("@Username", Username);
-                    if(password_new.Text.Length != 0) command.Parameters.AddWithValue("@hashpsswd", QuickHash(password_new.Text));
+
+                    if (password_new.Text.Length != 0) 
+                    {
+                        if(password_new.Text.Length < 6 && !Regex.IsMatch(password_new.Text, "[!@#$%^*()=+/*`.(){}|\\-\\[\\]]") || 
+                            !Regex.IsMatch(password_new.Text, @"[A-Z]") || !Regex.IsMatch(password_new.Text, @"[a-z]") || !Regex.IsMatch(password_new.Text, @"\d"))
+                        {
+                            password_new.BorderColor = Color.Red;
+                            return;
+                        }
+                        else
+                        {
+                            command.Parameters.AddWithValue("@hashpsswd", QuickHash(password_new.Text));
+                            password_new.BorderColor = Color.FromArgb(213, 218, 223);
+                        }
+                    }
                     else command.Parameters.AddWithValue("@hashpsswd", QuickHash(password_current.Text));
                     command.Parameters.AddWithValue("@Id", _id);
 
