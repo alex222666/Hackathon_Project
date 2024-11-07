@@ -1679,6 +1679,7 @@
             guna2CircleButton6.ShadowDecoration.Mode = Guna.UI2.WinForms.Enums.ShadowMode.Circle;
             guna2CircleButton6.Size = new Size(40, 38);
             guna2CircleButton6.TabIndex = 44;
+            guna2CircleButton6.Click += guna2CircleButton6_Click;
             // 
             // guna2CircleButton5
             // 
@@ -1697,6 +1698,7 @@
             guna2CircleButton5.ShadowDecoration.Mode = Guna.UI2.WinForms.Enums.ShadowMode.Circle;
             guna2CircleButton5.Size = new Size(40, 38);
             guna2CircleButton5.TabIndex = 43;
+            guna2CircleButton5.Click += guna2CircleButton6_Click;
             // 
             // guna2CircleButton4
             // 

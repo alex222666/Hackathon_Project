@@ -349,7 +349,7 @@ namespace Fighting_Game
             }
             healthBar.Health -= 5;
             //Winner
-            if (healthBar.Health == 90)
+            if (healthBar.Health == 0)
             {
                 player.URL = "";
                 LostGame frame = new LostGame(this,_main);
@@ -368,7 +368,7 @@ namespace Fighting_Game
             healthBar.Health--;
 
             //Winner
-            if(healthBar.Health == 90)
+            if(healthBar.Health == 0)
             {
                 player.URL = "";
                 JotaroWinning frame = new JotaroWinning(this,_main);
