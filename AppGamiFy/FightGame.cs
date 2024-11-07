@@ -87,7 +87,8 @@ namespace Fighting_Game
             if (!File.Exists("1.mp3")) { File.Copy("../../../Music/1.mp3", "1.mp3"); }
             player=new WindowsMediaPlayer();
             player.URL="1.mp3";
-            player.settings.volume =30;
+            player.controls.play();
+            player.settings.volume =20;
 
             DrawQuiz();
 
