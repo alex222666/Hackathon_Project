@@ -953,6 +953,7 @@
             guna2Button6.TabIndex = 60;
             guna2Button6.Text = "Resurse suplimentare";
             guna2Button6.TextOffset = new Point(2, -3);
+            guna2Button6.Click += guna2Button6_Click;
             // 
             // guna2Button5
             // 
@@ -976,6 +977,7 @@
             guna2Button5.TabIndex = 59;
             guna2Button5.Text = "Tutoriale Video";
             guna2Button5.TextOffset = new Point(19, -3);
+            guna2Button5.Click += guna2Button5_Click;
             // 
             // guna2Button4
             // 
@@ -999,6 +1001,7 @@
             guna2Button4.TabIndex = 58;
             guna2Button4.Text = "Documentație";
             guna2Button4.TextOffset = new Point(18, -3);
+            guna2Button4.Click += guna2Button4_Click;
             // 
             // label7
             // 
