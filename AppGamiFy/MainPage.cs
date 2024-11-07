@@ -27,7 +27,7 @@ namespace APP_CIH_CAHUL_BAC
         const string ConnectionString = "Data Source=ScorQuiz.db";
         public string Username = "";
         public readonly int _id = int.MinValue;
-        string materie = "Info";
+        public string materie = "Info";
         Point defaultPositionPhoto;
         Point defaultPositionScore;
         int oldScore = 0;

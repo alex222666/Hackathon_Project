@@ -207,6 +207,7 @@ namespace Fighting_Game
         {
             // Dispose of images to free resources
             player.URL = "";
+            secunde.Stop();
             _main.Visible = true;
             Jotaro.Dispose();
             Boss.Dispose();
@@ -390,7 +391,7 @@ namespace Fighting_Game
             secunde.Start();
             Random random = new Random();
             int id = random.Next(1, 100);
-            tmp=db.getQuiz("Info", id);
+            tmp=db.getQuiz(_main.materie, id);
             lbQuestionText.Text = tmp.questionText;
             btOption1.Text = tmp.Raspunsuri[0];
             btOption2.Text = tmp.Raspunsuri[1];
