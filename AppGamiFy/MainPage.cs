@@ -17,7 +17,7 @@ using Microsoft.VisualBasic;
 using AchievementPop;
 using SETTINGS_APP_CIH_CAHUL_BAC;
 using System.Security.Cryptography;
-using System.Text.RegularExpressions;
+using static System.Net.WebRequestMethods;
 
 namespace APP_CIH_CAHUL_BAC
 {
@@ -27,7 +27,7 @@ namespace APP_CIH_CAHUL_BAC
         const string ConnectionString = "Data Source=ScorQuiz.db";
         public string Username = "";
         public readonly int _id = int.MinValue;
-        string materie = "Info";
+        public string materie = "Info";
         Point defaultPositionPhoto;
         Point defaultPositionScore;
         int oldScore = 0;
@@ -48,6 +48,7 @@ namespace APP_CIH_CAHUL_BAC
         {
 
         }
+        int tmp_score = 0;
         public MainPage(int id, string username)
         {
             InitializeComponent();
@@ -64,13 +65,31 @@ namespace APP_CIH_CAHUL_BAC
             DoubleBuffered = true;
             ScoreChangeText();
             PremiumVerify();
+            tmp_score = 0;
+            points.Tick += new EventHandler((sender, e) =>
+            {
+                if (tmp_score <= VerifyTotalPoints())
+                {
+                    lbTotalPoints.Text = tmp_score.ToString();
+                    progressbar.Value = tmp_score;
+                    procentage.Text = tmp_score + "%";
+                    tmp_score++;
+                }
+                else
+                {
+                    points.Stop();
+                }
+            });
         }
+        System.Windows.Forms.Timer points = new System.Windows.Forms.Timer
+        {
+            Interval = 10
+        };
         public void ScoreChangeText()
         {
-            //lbTotalPoints.Text = VerifyTotalPoints().ToString();
+            tmp_score = 0;
+            points.Start();
             RankVerify();
-            progressbar.Value = VerifyTotalPoints();
-            procentage.Text = VerifyTotalPoints() + "%";
             if (progressbar.Value == 100 && materie == "Info")
             {
                 if (ExistAch(5) == false)
@@ -107,7 +126,7 @@ namespace APP_CIH_CAHUL_BAC
                     idk.Show();
                 }
             }
-            if (progressbar.Value == 100 && materie == "Mate")
+            if (progressbar.Value == 99 && materie == "Mate")
             {
                 if (ExistAch(9) == false)
                 {
@@ -189,6 +208,34 @@ namespace APP_CIH_CAHUL_BAC
             List<QuizScoreWeekly> tmp = EveryScoreWeek();
             double pasi = MaximScoreWeek();
             DateTime dateTime = DateTime.Now;
+            //Default Location for the Diagram and value
+            pbL.Location = new Point(pbL.Location.X, defaultPositionPhoto.Y);
+            pbL.Size = new Size(45, 0);
+            lbPntsL.Location = new Point(lbPntsL.Location.X, defaultPositionScore.Y);
+            lbPntsL.Text = "0";
+            pbMa.Location = new Point(pbMa.Location.X, defaultPositionPhoto.Y);
+            pbMa.Size = new Size(45, 0);
+            lbPntsMa.Location = new Point(lbPntsMa.Location.X, defaultPositionScore.Y);
+            pbMe.Location = new Point(pbMe.Location.X, defaultPositionPhoto.Y);
+            pbMe.Size = new Size(45, 0);
+            lbPntsMe.Location = new Point(lbPntsMe.Location.X, defaultPositionScore.Y);
+            lbPntsMe.Text = "0";
+            pbJ.Location = new Point(pbJ.Location.X, defaultPositionPhoto.Y);
+            pbJ.Size = new Size(45, 0);
+            lbPntsJ.Location = new Point(lbPntsJ.Location.X, defaultPositionScore.Y);
+            lbPntsJ.Text = "0";
+            pbV.Location = new Point(pbV.Location.X, defaultPositionPhoto.Y);
+            pbV.Size = new Size(45, 0);
+            lbPntsV.Location = new Point(lbPntsV.Location.X, defaultPositionScore.Y);
+            lbPntsV.Text = "0";
+            pbS.Location = new Point(pbS.Location.X, defaultPositionPhoto.Y);
+            pbS.Size = new Size(45, 0);
+            lbPntsS.Location = new Point(lbPntsS.Location.X, defaultPositionScore.Y);
+            lbPntsS.Text = "0";
+            pbD.Location = new Point(pbD.Location.X, defaultPositionPhoto.Y);
+            pbD.Size = new Size(45, 0);
+            lbPntsD.Location = new Point(lbPntsD.Location.X, defaultPositionScore.Y);
+            lbPntsD.Text = "0";
             foreach (QuizScoreWeekly s in tmp)
             {
                 if ((int)dateTime.DayOfWeek == s.Day) puncteAzi.Text = s.Score.ToString();
@@ -196,9 +243,6 @@ namespace APP_CIH_CAHUL_BAC
                 {
                     case 1:
                         {
-                            pbL.Location = new Point(pbL.Location.X, defaultPositionPhoto.Y);
-                            lbPntsL.Location = new Point(lbPntsL.Location.X, defaultPositionScore.Y);
-                            pbL.Size = new Size(pbL.Width, 0);
                             pbL.Size = new Size(pbL.Width, pbL.Height + Convert.ToInt32(pasi * s.Score));
                             pbL.Location = new Point(pbL.Location.X, pbL.Location.Y - Convert.ToInt32(pasi * s.Score));
                             lbPntsL.Location = new Point(lbPntsL.Location.X, lbPntsL.Location.Y - Convert.ToInt32(pasi * s.Score));
@@ -207,9 +251,6 @@ namespace APP_CIH_CAHUL_BAC
                         break;
                     case 2:
                         {
-                            pbMa.Location = new Point(pbMa.Location.X, defaultPositionPhoto.Y);
-                            lbPntsMa.Location = new Point(lbPntsMa.Location.X, defaultPositionScore.Y);
-                            pbL.Size = new Size(pbL.Width, 0);
                             pbMa.Size = new Size(pbMa.Width, pbMa.Height + Convert.ToInt32(pasi * s.Score));
                             pbMa.Location = new Point(pbMa.Location.X, pbMa.Location.Y - Convert.ToInt32(pasi * s.Score));
                             lbPntsMa.Location = new Point(lbPntsMa.Location.X, lbPntsMa.Location.Y - Convert.ToInt32(pasi * s.Score));
@@ -218,9 +259,6 @@ namespace APP_CIH_CAHUL_BAC
                         break;
                     case 3:
                         {
-                            pbMe.Location = new Point(pbMe.Location.X, defaultPositionPhoto.Y);
-                            lbPntsMe.Location = new Point(lbPntsMe.Location.X, defaultPositionScore.Y);
-                            pbMe.Size = new Size(pbL.Width, 0);
                             pbMe.Size = new Size(pbMe.Width, pbMe.Height + Convert.ToInt32(pasi * s.Score));
                             pbMe.Location = new Point(pbMe.Location.X, pbMe.Location.Y - Convert.ToInt32(pasi * s.Score));
                             lbPntsMe.Location = new Point(lbPntsMe.Location.X, lbPntsMe.Location.Y - Convert.ToInt32(pasi * s.Score));
@@ -229,9 +267,6 @@ namespace APP_CIH_CAHUL_BAC
                         break;
                     case 4:
                         {
-                            pbJ.Location = new Point(pbJ.Location.X, defaultPositionPhoto.Y);
-                            lbPntsJ.Location = new Point(lbPntsJ.Location.X, defaultPositionScore.Y);
-                            pbJ.Size = new Size(pbL.Width, 0);
                             pbJ.Size = new Size(pbJ.Width, pbJ.Height + Convert.ToInt32(pasi * s.Score));
                             pbJ.Location = new Point(pbJ.Location.X, pbJ.Location.Y - Convert.ToInt32(pasi * s.Score));
                             lbPntsJ.Location = new Point(lbPntsJ.Location.X, lbPntsJ.Location.Y - Convert.ToInt32(pasi * s.Score));
@@ -240,9 +275,6 @@ namespace APP_CIH_CAHUL_BAC
                         break;
                     case 5:
                         {
-                            pbV.Location = new Point(pbV.Location.X, defaultPositionPhoto.Y);
-                            lbPntsV.Location = new Point(lbPntsV.Location.X, defaultPositionScore.Y);
-                            pbV.Size = new Size(pbL.Width, 0);
                             pbV.Size = new Size(pbV.Width, pbV.Height + Convert.ToInt32(pasi * s.Score));
                             pbV.Location = new Point(pbV.Location.X, pbV.Location.Y - Convert.ToInt32(pasi * s.Score));
                             lbPntsV.Location = new Point(lbPntsV.Location.X, lbPntsV.Location.Y - Convert.ToInt32(pasi * s.Score));
@@ -251,9 +283,6 @@ namespace APP_CIH_CAHUL_BAC
                         break;
                     case 6:
                         {
-                            pbS.Location = new Point(pbS.Location.X, defaultPositionPhoto.Y);
-                            lbPntsS.Location = new Point(lbPntsS.Location.X, defaultPositionScore.Y);
-                            pbS.Size = new Size(pbL.Width, 0);
                             pbS.Size = new Size(pbS.Width, pbS.Height + Convert.ToInt32(pasi * s.Score));
                             pbS.Location = new Point(pbS.Location.X, pbS.Location.Y - Convert.ToInt32(pasi * s.Score));
                             lbPntsS.Location = new Point(lbPntsS.Location.X, lbPntsS.Location.Y - Convert.ToInt32(pasi * s.Score));
@@ -262,9 +291,6 @@ namespace APP_CIH_CAHUL_BAC
                         break;
                     case 0:
                         {
-                            pbD.Location = new Point(pbD.Location.X, defaultPositionPhoto.Y);
-                            lbPntsD.Location = new Point(lbPntsD.Location.X, defaultPositionScore.Y);
-                            pbD.Size = new Size(pbL.Width, 0);
                             pbD.Size = new Size(pbD.Width, pbD.Height + Convert.ToInt32(pasi * s.Score));
                             pbD.Location = new Point(pbD.Location.X, pbD.Location.Y - Convert.ToInt32(pasi * s.Score));
                             lbPntsD.Location = new Point(lbPntsD.Location.X, lbPntsD.Location.Y - Convert.ToInt32(pasi * s.Score));
@@ -327,7 +353,7 @@ namespace APP_CIH_CAHUL_BAC
                                 }
                                 catch
                                 {
-                                    tmp.Day = 0;
+                                    tmp.Day = -1;
                                 }
                                 data.Add(tmp);
                             }
@@ -376,7 +402,7 @@ namespace APP_CIH_CAHUL_BAC
         }
         public void RankVerify()
         {
-            int rank = 0;
+            int rank = 1;
             string stringsql = sqlCommand($"Username = \"{Username}\"");
 
             using (SqliteConnection connection = new SqliteConnection(ConnectionString))
@@ -501,7 +527,7 @@ namespace APP_CIH_CAHUL_BAC
                     idk.Show();
                 }
             }
-            if (this.score == 11)
+            if (this.score == 10)
             {
                 if (ExistAch(11) == false)
                 {
@@ -509,14 +535,14 @@ namespace APP_CIH_CAHUL_BAC
                     Achievements idk = new Achievements(11);
                     idk.Show();
                 }
-            }
-            if (timp >= 240)
-            {
-                if (ExistAch(12) == false)
+                if (timp >= 240)
                 {
-                    InsertAchievement(12);
-                    Achievements idk = new Achievements(11);
-                    idk.Show();
+                    if (ExistAch(12) == false)
+                    {
+                        InsertAchievement(12);
+                        Achievements idk = new Achievements(11);
+                        idk.Show();
+                    }
                 }
             }
         }
@@ -754,7 +780,7 @@ namespace APP_CIH_CAHUL_BAC
             inapoi.Enabled = true;
             GetQuiz(QzLb);
             db = new database1();
-            list = db.getData("Info", QzLb * 10 - 10, QzLb * 10);
+            list = db.getData(materie, QzLb * 10 - 10, QzLb * 10);
             timp = 300;
             secunde.Start();
             score = 0;
@@ -1009,10 +1035,12 @@ namespace APP_CIH_CAHUL_BAC
             using (SqliteConnection connection = new SqliteConnection(ConnectionString))
             {
                 connection.Open();
+
                 using (var command = new SqliteCommand(sqlVerification, connection))
                 {
                     command.Parameters.AddWithValue("@Id", _id);
                     command.Parameters.AddWithValue("@hashpsswd", QuickHash(password_current.Text));
+
                     int count = Convert.ToInt32(command.ExecuteScalar());
                     if (count == 0)
                     {
@@ -1022,40 +1050,14 @@ namespace APP_CIH_CAHUL_BAC
                     }
                 }
 
-
                 using (var command = new SqliteCommand(sqlUpdate, connection))
                 {
-                    if (username_set.Text.Length != 0)
-                    {
-                        long userCount = 0;
-                        string query = "SELECT COUNT(*) FROM Users WHERE Username = @username";
-                        SqliteCommand command2 = new SqliteCommand(query, connection);
-                        command2.Parameters.AddWithValue("@username", username_set.Text);
-                        userCount = (long)command2.ExecuteScalar();
-                        if (userCount == 0) 
-                        {
-                            Username = username_set.Text;
-                            username_set.BorderColor = Color.FromArgb(213, 218, 223);
-                        } 
-                        else username_set.BorderColor = Color.Red;
-                    }
-                    command.Parameters.AddWithValue("@Username", Username);
                     password_current.BorderColor = Color.FromArgb(213, 218, 223);
-
-                    if (password_new.Text.Length != 0) 
-                    {
-                        if(password_new.Text.Length < 6 && !Regex.IsMatch(password_new.Text, "[!@#$%^*()=+/*`.(){}|\\-\\[\\]]") || 
-                            !Regex.IsMatch(password_new.Text, @"[A-Z]") || !Regex.IsMatch(password_new.Text, @"[a-z]") || !Regex.IsMatch(password_new.Text, @"\d"))
-                        {
-                            password_new.BorderColor = Color.Red;
-                            return;
-                        }
-                        else
-                        {
-                            command.Parameters.AddWithValue("@hashpsswd", QuickHash(password_new.Text));
-                            password_new.BorderColor = Color.FromArgb(213, 218, 223);
-                        }
-                    }
+                    Debug.WriteLine(Username);
+                    Debug.WriteLine(username_set.Text.Length);
+                    if (username_set.Text.Length != 0) command.Parameters.AddWithValue("@Username", username_set.Text);
+                    else command.Parameters.AddWithValue("@Username", Username);
+                    if (password_new.Text.Length != 0) command.Parameters.AddWithValue("@hashpsswd", QuickHash(password_new.Text));
                     else command.Parameters.AddWithValue("@hashpsswd", QuickHash(password_current.Text));
                     command.Parameters.AddWithValue("@Id", _id);
 
@@ -1063,6 +1065,60 @@ namespace APP_CIH_CAHUL_BAC
                 }
                 connection.Close();
             }
+        }
+
+        private void guna2CircleButton6_Click(object sender, EventArgs e)
+        {
+            tmp_score = 0;
+            if (materie == "Info")
+            {
+                materie = "Mate";
+                label3.Text = "Matematica";
+            }
+            else
+            {
+                label3.Text = "Informatica";
+                materie = "Info";
+            }
+            ScoreChangeText();
+        }
+
+        private void guna2Button5_Click(object sender, EventArgs e)
+        {
+            //Tutoriale Video
+            if (materie == "Mate") Process.Start(new ProcessStartInfo("cmd", $"/c start {"https://www.youtube.com/playlist?list=PLyJ0GVWmY06Sn84letU9Q6SrlkSw6bvzu"}") { CreateNoWindow = true });
+            else Process.Start(new ProcessStartInfo("cmd", $"/c start {"https://www.youtube.com/playlist?list=PLYHM1Jl4h5-MDUoZa1vaed7-OlSxjyXzl"}") { CreateNoWindow = true });
+        }
+
+        private void guna2Button4_Click(object sender, EventArgs e)
+        {
+            //Documentatie
+            Process.Start("explorer", @$"Doc\{materie}.pdf");
+        }
+
+        private void guna2Button6_Click(object sender, EventArgs e)
+        {
+            //Resurse Suplimentare
+            string temporary;
+            if (materie == "Info") temporary = "Informatica";
+            else temporary = "matematica";
+            Process.Start("explorer", $"https://ance.gov.md/content/{temporary}");
+        }
+
+        private void guna2TileButton2_Click(object sender, EventArgs e)
+        {
+            ShowScoreWeekly();
+
+            guna2Panel20.Visible = false;
+            guna2Panel2.Visible = false;
+            guna2Panel22.Visible = false;
+            guna2Panel14.Visible = true;
+            guna2Panel24.Visible = false;
+        }
+
+        private void guna2CircleButton11_Click(object sender, EventArgs e)
+        {
+            Process.Start("notepad.exe");
         }
     }
 }

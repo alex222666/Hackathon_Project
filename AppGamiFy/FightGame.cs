@@ -87,7 +87,8 @@ namespace Fighting_Game
             if (!File.Exists("1.mp3")) { File.Copy("../../../Music/1.mp3", "1.mp3"); }
             player=new WindowsMediaPlayer();
             player.URL="1.mp3";
-            player.settings.volume =30;
+            player.controls.play();
+            player.settings.volume =20;
 
             DrawQuiz();
 
@@ -207,6 +208,7 @@ namespace Fighting_Game
         {
             // Dispose of images to free resources
             player.URL = "";
+            secunde.Stop();
             _main.Visible = true;
             Jotaro.Dispose();
             Boss.Dispose();
@@ -352,7 +354,7 @@ namespace Fighting_Game
             if (healthBar.Health == 0)
             {
                 player.URL = "";
-                LostGame frame = new LostGame(this);
+                LostGame frame = new LostGame(this,_main);
                 frame.Show();
                 secunde=new System.Windows.Forms.Timer();
                 this.Visible = false;
@@ -371,7 +373,7 @@ namespace Fighting_Game
             if(healthBar.Health == 0)
             {
                 player.URL = "";
-                JotaroWinning frame = new JotaroWinning(this);
+                JotaroWinning frame = new JotaroWinning(this,_main);
                 secunde=new System.Windows.Forms.Timer();
                 frame.Show();
             }
@@ -390,7 +392,7 @@ namespace Fighting_Game
             secunde.Start();
             Random random = new Random();
             int id = random.Next(1, 100);
-            tmp=db.getQuiz("Info", id);
+            tmp=db.getQuiz(_main.materie, id);
             lbQuestionText.Text = tmp.questionText;
             btOption1.Text = tmp.Raspunsuri[0];
             btOption2.Text = tmp.Raspunsuri[1];
