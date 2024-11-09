@@ -1120,5 +1120,14 @@ namespace APP_CIH_CAHUL_BAC
         {
             Process.Start("notepad.exe");
         }
+
+        private void guna2TileButton5_Click(object sender, EventArgs e)
+        {
+            guna2Panel20.Visible = false;
+            guna2Panel2.Visible = false;
+            guna2Panel22.Visible = false;
+            guna2Panel14.Visible = false;
+            guna2Panel24.Visible = false;
+        }
     }
 }
