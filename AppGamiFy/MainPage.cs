@@ -23,7 +23,6 @@ namespace APP_CIH_CAHUL_BAC
 {
     public partial class MainPage : Form
     {
-
         const string ConnectionString = "Data Source=ScorQuiz.db";
         public string Username = "";
         public readonly int _id = int.MinValue;
@@ -49,9 +48,27 @@ namespace APP_CIH_CAHUL_BAC
 
         }
         int tmp_score = 0;
+
+
+        private Image OriginalImage;
+
+        private Image OriginalImage1;
         public MainPage(int id, string username)
         {
             InitializeComponent();
+
+            OriginalImage = Btn_1.Image;
+
+            Btn_1.MouseEnter += new EventHandler(Btn_1_MouseEnter);
+            Btn_1.MouseLeave += new EventHandler(Btn_1_MouseLeave);
+
+
+            OriginalImage1 = Btn_2.Image;
+
+            Btn_2.MouseEnter += new EventHandler(Btn_2_MouseEnter);
+            Btn_2.MouseLeave += new EventHandler(Btn_2_MouseLeave);
+
+
             _id = id;
             Username = username;
             label1.Text = $"Salut {username}!";
@@ -196,7 +213,7 @@ namespace APP_CIH_CAHUL_BAC
             //Sarcici de lucru
             //pbD pdL pdMa pdMe pdJ pdV 145max
             ShowScoreWeekly();
-
+            AboutUsPanel.Visible = false;
             guna2Panel20.Visible = false;
             guna2Panel2.Visible = false;
             guna2Panel22.Visible = false;
@@ -394,6 +411,7 @@ namespace APP_CIH_CAHUL_BAC
         private void guna2TileButton1_Click(object sender, EventArgs e)
         {
             ScoreChangeText();
+            AboutUsPanel.Visible = false;
             guna2Panel20.Visible = false;
             guna2Panel2.Visible = true;
             guna2Panel14.Visible = false;
@@ -722,6 +740,7 @@ namespace APP_CIH_CAHUL_BAC
             secunde.Stop();
             ShowScoreWeekly();
             guna2Panel20.Visible = false;
+            AboutUsPanel.Visible = false;
             guna2Panel2.Visible = false;
             guna2Panel14.Visible = true;
             guna2Panel22.Visible = false;
@@ -771,6 +790,7 @@ namespace APP_CIH_CAHUL_BAC
         {
             guna2Panel21.Controls.Remove(tmp);
             panel1.Visible = true;
+            AboutUsPanel.Visible = false;
             guna2Panel20.Visible = true;
             guna2Panel2.Visible = false;
             guna2Panel14.Visible = false;
@@ -860,6 +880,7 @@ namespace APP_CIH_CAHUL_BAC
 
         private void guna2TileButton3_Click(object sender, EventArgs e)
         {
+            AboutUsPanel.Visible = false;
             guna2Panel20.Visible = false;
             guna2Panel2.Visible = false;
             guna2Panel14.Visible = false;
@@ -935,6 +956,7 @@ namespace APP_CIH_CAHUL_BAC
         private Image eyeClosed;
         private void guna2TileButton6_Click(object sender, EventArgs e)
         {
+            AboutUsPanel.Visible = false;
             guna2Panel24.Visible = true;
             guna2Panel20.Visible = false;
             guna2Panel2.Visible = false;
@@ -1108,7 +1130,7 @@ namespace APP_CIH_CAHUL_BAC
         private void guna2TileButton2_Click(object sender, EventArgs e)
         {
             ShowScoreWeekly();
-
+            AboutUsPanel.Visible = false;
             guna2Panel20.Visible = false;
             guna2Panel2.Visible = false;
             guna2Panel22.Visible = false;
@@ -1119,6 +1141,100 @@ namespace APP_CIH_CAHUL_BAC
         private void guna2CircleButton11_Click(object sender, EventArgs e)
         {
             Process.Start("notepad.exe");
+        }
+
+
+
+        //about us interface
+        private int currentIndex = 0;
+        private Image[] images = new Image[]
+        {
+            Image.FromFile("../../../img/Section1.png"),
+            Image.FromFile("../../../img/Section2.png")
+        };
+        private void Btn_1_Click(object sender, EventArgs e)
+        {
+            currentIndex++;
+
+            if (currentIndex >= images.Length)
+            {
+                currentIndex = 0;
+            }
+
+            PanelMision.BackgroundImage = images[currentIndex];
+        }
+
+        private void Btn_2_Click(object sender, EventArgs e)
+        {
+            currentIndex--;
+
+            if (currentIndex < 0)
+            {
+                currentIndex = images.Length - 1;
+            }
+
+            PanelMision.BackgroundImage = images[currentIndex];
+        }
+        private void Btn_1_MouseEnter(object sender, EventArgs e)
+        {
+            Btn_1.Image = Image.FromFile("../../../img/Btn2.png");
+        }
+
+        private void Btn_1_MouseLeave(object sender, EventArgs e)
+        {
+            Btn_1.Image = OriginalImage;
+        }
+
+
+        private void Btn_2_MouseEnter(object sender, EventArgs e)
+        {
+            Btn_2.Image = Image.FromFile("../../../img/Btn4.png");
+        }
+
+        private void Btn_2_MouseLeave(object sender, EventArgs e)
+        {
+            Btn_2.Image = OriginalImage1;
+        }
+        private void msn_Click(object sender, EventArgs e)
+        {
+            PanelMision.Visible = true;
+            AbordarePanel.Visible = false;
+            EchipaPanel.Visible = false;
+            ContactUs.Visible = false;
+        }
+
+        private void guna2TileButton5_Click(object sender, EventArgs e)
+        {
+            AboutUsPanel.Visible = true;
+            guna2Panel20.Visible = false;
+            guna2Panel2.Visible = false;
+            guna2Panel22.Visible = false;
+            guna2Panel14.Visible = false;
+            guna2Panel24.Visible = false;
+        }
+
+        private void abr_Click(object sender, EventArgs e)
+        {
+            PanelMision.Visible = false;
+            AbordarePanel.Visible = true;
+            EchipaPanel.Visible = false;
+            ContactUs.Visible = false;
+        }
+
+        private void ech_Click(object sender, EventArgs e)
+        {
+            PanelMision.Visible = false;
+            AbordarePanel.Visible = false;
+            EchipaPanel.Visible = true;
+            ContactUs.Visible = false;
+        }
+
+        private void con_Click(object sender, EventArgs e)
+        {
+            PanelMision.Visible = false;
+            AbordarePanel.Visible = false;
+            EchipaPanel.Visible = false;
+            ContactUs.Visible = true;
         }
     }
 }
